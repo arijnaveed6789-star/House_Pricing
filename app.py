@@ -582,7 +582,7 @@ st.markdown("""
 # Create navbar layout: brand on left, navigation links on right
 nav_pages = ["Home", "Data Analysis", "Model Performance", "Price Prediction", "Conclusion"]
 # Use flexible columns that adapt to screen size
-navbar_cols = st.columns([3] + [1] * len(nav_pages), gap="small")
+navbar_cols = st.columns([3] + [1] * len(nav_pages), gap="large")
 
 with navbar_cols[0]:
     st.markdown("""
@@ -609,13 +609,13 @@ st.markdown("""
         flex-direction: row !important;
         align-items: center !important;
         justify-content: flex-start !important;
-        gap: 0.85rem !important;
+        gap: 1.5rem !important;
         margin: 0 !important;
-        padding: 0.5rem 2rem !important;
+        padding: 0.4rem 2rem !important;
         background: linear-gradient(135deg, #1a1f2e 0%, #2c3542 50%, #1a1f2e 100%) !important;
         width: 100% !important;
         height: auto !important;
-        min-height: 40px !important;
+        min-height: 32px !important;
         max-height: none !important;
         box-sizing: border-box !important;
         flex-wrap: nowrap !important;
@@ -687,18 +687,18 @@ st.markdown("""
     
     /* Brand/Logo - Left Aligned, Vertically Centered */
     .navbar-brand {
-        font-size: 1.05rem !important;
+        font-size: 0.85rem !important;
         font-weight: 1000 !important;
         color: #000000 !important;
         letter-spacing: -0.3px !important;
         white-space: nowrap !important;
         font-family: 'Inter', 'Poppins', sans-serif !important;
-        margin: 6px !important;
+        margin: 4px !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: flex-start !important;
-        height: 26px !important;
-        min-height: 26px !important;
+        height: 22px !important;
+        min-height: 22px !important;
         flex-shrink: 0 !important;
         line-height: 1.2 !important;
         vertical-align: middle !important;
@@ -736,7 +736,7 @@ st.markdown("""
         min-width: max-content !important;
         max-width: max-content !important;
         height: auto !important;
-        min-height: 26px !important;
+        min-height: 22px !important;
         max-height: none !important;
         overflow: visible !important;
     }
@@ -758,7 +758,7 @@ st.markdown("""
         min-width: max-content !important;
         max-width: max-content !important;
         height: auto !important;
-        min-height: 26px !important;
+        min-height: 22px !important;
         max-height: none !important;
         background: transparent !important;
         display: flex !important;
@@ -781,22 +781,22 @@ st.markdown("""
         background: rgba(26, 188, 156, 0.1) !important;
         color: rgba(255, 255, 255, 0.95) !important;
         font-weight: 500 !important;
-        font-size: 0.65rem !important;
-        padding: 0.35rem 0.8rem !important;
-        border-radius: 5px !important;
+        font-size: 0.85rem !important;
+        padding: 0.5rem 1rem !important;
+        border-radius: 4px !important;
         border: none !important;
         box-shadow: none !important;
         transition: all 0.2s ease !important;
         cursor: pointer !important;
         text-transform: none !important;
-        letter-spacing: 0.03px !important;
+        letter-spacing: 0.02px !important;
         white-space: nowrap !important;
         font-family: 'Inter', 'Roboto', sans-serif !important;
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
         height: auto !important;
-        min-height: 26px !important;
+        min-height: 22px !important;
         max-height: none !important;
         display: inline-flex !important;
         align-items: center !important;
@@ -838,13 +838,13 @@ st.markdown("""
     
     /* Model Performance - Ensure full text display */
     button[key="nav_Model Performance"] {
-        font-size: 0.62rem !important;
+        font-size: 0.53rem !important;
         letter-spacing: 0px !important;
         white-space: nowrap !important;
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        padding: 0.35rem 0.75rem !important;
+        padding: 0.25rem 0.55rem !important;
         flex-shrink: 0 !important;
         overflow: visible !important;
     }
@@ -852,11 +852,11 @@ st.markdown("""
     /* Price Prediction - Ensure full text display */
     button[key="nav_Price Prediction"] {
         white-space: nowrap !important;
-        font-size: 0.62rem !important;
+        font-size: 0.53rem !important;
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        padding: 0.35rem 0.75rem !important;
+        padding: 0.25rem 0.55rem !important;
         flex-shrink: 0 !important;
         overflow: visible !important;
     }
@@ -864,11 +864,11 @@ st.markdown("""
     /* Data Analysis - Ensure full text display */
     button[key="nav_Data Analysis"] {
         white-space: nowrap !important;
-        font-size: 0.62rem !important;
+        font-size: 0.53rem !important;
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        padding: 0.35rem 0.75rem !important;
+        padding: 0.25rem 0.55rem !important;
         flex-shrink: 0 !important;
         overflow: visible !important;
     }
@@ -879,7 +879,7 @@ st.markdown("""
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        padding: 0.35rem 0.8rem !important;
+        padding: 0.25rem 0.6rem !important;
         flex-shrink: 0 !important;
         overflow: visible !important;
     }
@@ -890,7 +890,7 @@ st.markdown("""
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        padding: 0.35rem 0.8rem !important;
+        padding: 0.25rem 0.6rem !important;
         flex-shrink: 0 !important;
         overflow: visible !important;
     }
@@ -958,11 +958,67 @@ st.markdown("""
     @media (max-width: 1024px) {
         .navbar-wrapper ~ div:has([data-testid="column"]),
         div:has(.navbar-wrapper) ~ div:has([data-testid="column"]) {
-            padding: 0.45rem 1.5rem !important;
+            padding: 0.35rem 1.5rem !important;
             height: auto !important;
-            min-height: 36px !important;
+            min-height: 28px !important;
             max-height: none !important;
-            gap: 0.75rem !important;
+            gap: 0.85rem !important;
+        }
+        .navbar-brand {
+            font-size: 0.8rem !important;
+            flex-shrink: 0 !important;
+        }
+        .navbar-wrapper ~ div [data-testid="column"]:first-child {
+            flex-shrink: 0 !important;
+        }
+        .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
+        div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
+            height: auto !important;
+            min-height: 20px !important;
+            max-height: none !important;
+            padding: 0 0.2rem !important;
+            flex-shrink: 0 !important;
+            flex-basis: auto !important;
+        }
+        .navbar-wrapper ~ div .stButton,
+        div:has(.navbar-wrapper) ~ div .stButton {
+            height: auto !important;
+            min-height: 20px !important;
+            max-height: none !important;
+        }
+        button[key^="nav_"] {
+            font-size: 0.53rem !important;
+            padding: 0.25rem 0.55rem !important;
+            height: auto !important;
+            min-height: 20px !important;
+            max-height: none !important;
+            white-space: nowrap !important;
+            flex-shrink: 0 !important;
+            min-width: max-content !important;
+        }
+        button[key="nav_Model Performance"] {
+            font-size: 0.51rem !important;
+            padding: 0.25rem 0.5rem !important;
+        }
+        button[key="nav_Price Prediction"] {
+            font-size: 0.51rem !important;
+            padding: 0.25rem 0.5rem !important;
+        }
+        button[key="nav_Data Analysis"] {
+            font-size: 0.51rem !important;
+            padding: 0.25rem 0.5rem !important;
+        }
+    }
+    
+    /* Responsive Design - Laptop (1024px - 1440px) */
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        .navbar-wrapper ~ div:has([data-testid="column"]),
+        div:has(.navbar-wrapper) ~ div:has([data-testid="column"]) {
+            padding: 0.5rem 2rem !important;
+            height: auto !important;
+            min-height: 40px !important;
+            max-height: none !important;
+            gap: 2rem !important;
         }
         .navbar-brand {
             font-size: 1rem !important;
@@ -974,39 +1030,97 @@ st.markdown("""
         .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
         div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
             height: auto !important;
-            min-height: 24px !important;
+            min-height: 32px !important;
             max-height: none !important;
-            padding: 0 0.2rem !important;
+            padding: 0 0.5rem !important;
             flex-shrink: 0 !important;
             flex-basis: auto !important;
+            margin: 0 0.25rem !important;
         }
         .navbar-wrapper ~ div .stButton,
         div:has(.navbar-wrapper) ~ div .stButton {
             height: auto !important;
-            min-height: 24px !important;
+            min-height: 32px !important;
             max-height: none !important;
         }
         button[key^="nav_"] {
-            font-size: 0.62rem !important;
-            padding: 0.32rem 0.75rem !important;
+            font-size: 0.85rem !important;
+            padding: 0.5rem 1.2rem !important;
             height: auto !important;
-            min-height: 24px !important;
+            min-height: 32px !important;
             max-height: none !important;
             white-space: nowrap !important;
             flex-shrink: 0 !important;
             min-width: max-content !important;
         }
         button[key="nav_Model Performance"] {
-            font-size: 0.6rem !important;
-            padding: 0.32rem 0.7rem !important;
+            font-size: 0.8rem !important;
+            padding: 0.5rem 1.1rem !important;
         }
         button[key="nav_Price Prediction"] {
-            font-size: 0.6rem !important;
-            padding: 0.32rem 0.7rem !important;
+            font-size: 0.8rem !important;
+            padding: 0.5rem 1.1rem !important;
         }
         button[key="nav_Data Analysis"] {
-            font-size: 0.6rem !important;
-            padding: 0.32rem 0.7rem !important;
+            font-size: 0.8rem !important;
+            padding: 0.5rem 1.1rem !important;
+        }
+    }
+    
+    /* Responsive Design - Desktop/Large Laptop (1440px+) */
+    @media (min-width: 1440px) {
+        .navbar-wrapper ~ div:has([data-testid="column"]),
+        div:has(.navbar-wrapper) ~ div:has([data-testid="column"]) {
+            padding: 0.6rem 2.5rem !important;
+            height: auto !important;
+            min-height: 44px !important;
+            max-height: none !important;
+            gap: 2.5rem !important;
+        }
+        .navbar-brand {
+            font-size: 1.1rem !important;
+            flex-shrink: 0 !important;
+        }
+        .navbar-wrapper ~ div [data-testid="column"]:first-child {
+            flex-shrink: 0 !important;
+        }
+        .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
+        div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
+            height: auto !important;
+            min-height: 36px !important;
+            max-height: none !important;
+            padding: 0 0.75rem !important;
+            flex-shrink: 0 !important;
+            flex-basis: auto !important;
+            margin: 0 0.5rem !important;
+        }
+        .navbar-wrapper ~ div .stButton,
+        div:has(.navbar-wrapper) ~ div .stButton {
+            height: auto !important;
+            min-height: 36px !important;
+            max-height: none !important;
+        }
+        button[key^="nav_"] {
+            font-size: 0.95rem !important;
+            padding: 0.6rem 1.5rem !important;
+            height: auto !important;
+            min-height: 36px !important;
+            max-height: none !important;
+            white-space: nowrap !important;
+            flex-shrink: 0 !important;
+            min-width: max-content !important;
+        }
+        button[key="nav_Model Performance"] {
+            font-size: 0.9rem !important;
+            padding: 0.6rem 1.4rem !important;
+        }
+        button[key="nav_Price Prediction"] {
+            font-size: 0.9rem !important;
+            padding: 0.6rem 1.4rem !important;
+        }
+        button[key="nav_Data Analysis"] {
+            font-size: 0.9rem !important;
+            padding: 0.6rem 1.4rem !important;
         }
     }
     
@@ -1142,6 +1256,8 @@ st.markdown("""
             const navButtons = document.querySelectorAll('button[key^="nav_"]');
             const isMobile = window.innerWidth <= 768;
             const isTablet = window.innerWidth <= 1024 && window.innerWidth > 768;
+            const isLaptop = window.innerWidth > 1024 && window.innerWidth <= 1440;
+            const isDesktop = window.innerWidth > 1440;
             
             navButtons.forEach(btn => {{
                 // Force single line and full width display
@@ -1155,11 +1271,17 @@ st.markdown("""
                 
                 // Responsive font sizing
                 if (isMobile) {{
-                    btn.style.setProperty('font-size', '0.58rem', 'important');
-                    btn.style.setProperty('padding', '0.3rem 0.6rem', 'important');
+                    btn.style.setProperty('font-size', '0.5rem', 'important');
+                    btn.style.setProperty('padding', '0.25rem 0.5rem', 'important');
                 }} else if (isTablet) {{
-                    btn.style.setProperty('font-size', '0.62rem', 'important');
-                    btn.style.setProperty('padding', '0.32rem 0.75rem', 'important');
+                    btn.style.setProperty('font-size', '0.53rem', 'important');
+                    btn.style.setProperty('padding', '0.25rem 0.55rem', 'important');
+                }} else if (isLaptop) {{
+                    btn.style.setProperty('font-size', '0.85rem', 'important');
+                    btn.style.setProperty('padding', '0.5rem 1.2rem', 'important');
+                }} else if (isDesktop) {{
+                    btn.style.setProperty('font-size', '0.95rem', 'important');
+                    btn.style.setProperty('padding', '0.6rem 1.5rem', 'important');
                 }}
                 
                 // Force ALL parent containers to not constrain - AGGRESSIVE
