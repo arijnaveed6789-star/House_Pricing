@@ -581,7 +581,8 @@ st.markdown("""
 
 # Create navbar layout: brand on left, navigation links on right
 nav_pages = ["Home", "Data Analysis", "Model Performance", "Price Prediction", "Conclusion"]
-navbar_cols = st.columns([2, 1.2, 1.4, 1.4, 1.3, 1.2], gap="small")
+# Use flexible columns that adapt to screen size
+navbar_cols = st.columns([3] + [1] * len(nav_pages), gap="small")
 
 with navbar_cols[0]:
     st.markdown("""
@@ -608,7 +609,7 @@ st.markdown("""
         flex-direction: row !important;
         align-items: center !important;
         justify-content: flex-start !important;
-        gap: 0.75rem !important;
+        gap: 1rem !important;
         margin: 0 !important;
         padding: 0.75rem 2rem !important;
         background: linear-gradient(135deg, #1a1f2e 0%, #2c3542 50%, #1a1f2e 100%) !important;
@@ -620,6 +621,8 @@ st.markdown("""
         flex-wrap: nowrap !important;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
         border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+        overflow-x: visible !important;
+        overflow-y: visible !important;
     }
     
     /* Override Streamlit column width calculation - force content-based sizing */
@@ -627,7 +630,7 @@ st.markdown("""
     div:has(.navbar-wrapper) ~ div [data-testid="column"] {
         flex-basis: auto !important;
         flex-grow: 0 !important;
-        flex-shrink: 0 !important;
+        flex-shrink: 1 !important;
     }
     
     /* First column (brand) - takes remaining space */
@@ -660,12 +663,12 @@ st.markdown("""
     /* CRITICAL: Override Streamlit's column width calculation completely */
     .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
     div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
-        flex: 0 0 auto !important;
+        flex: 0 1 auto !important;
         flex-basis: auto !important;
         flex-grow: 0 !important;
-        flex-shrink: 0 !important;
+        flex-shrink: 1 !important;
         width: auto !important;
-        min-width: max-content !important;
+        min-width: fit-content !important;
         max-width: max-content !important;
     }
     
@@ -708,11 +711,13 @@ st.markdown("""
         display: flex !important;
         align-items: center !important;
         justify-content: flex-start !important;
-        flex: 0 0 auto !important;
+        flex: 0 1 auto !important;
+        flex-shrink: 0 !important;
         margin-right: auto !important;
         padding: 0 !important;
         height: 100% !important;
         min-height: 40px !important;
+        min-width: fit-content !important;
     }
     
     /* Navigation link columns - Right aligned, compact uniform sizing */
@@ -721,11 +726,11 @@ st.markdown("""
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        flex: 0 0 auto !important;
+        flex: 0 1 auto !important;
         flex-basis: auto !important;
         flex-grow: 0 !important;
-        flex-shrink: 0 !important;
-        padding: 0 0.5rem !important;
+        flex-shrink: 1 !important;
+        padding: 0 0.25rem !important;
         margin: 0 !important;
         width: auto !important;
         min-width: fit-content !important;
@@ -756,12 +761,12 @@ st.markdown("""
     
     /* Navigation Links - Styled as Links, NOT Buttons */
     button[key^="nav_"] {
-        background: transparent !important;
-        color: rgba(255, 255, 255, 0.85) !important;
+        background: rgba(26, 188, 156, 0.1) !important;
+        color: rgba(255, 255, 255, 0.95) !important;
         font-weight: 500 !important;
         font-size: 0.875rem !important;
-        padding: 0.5rem 1rem !important;
-        border-radius: 6px !important;
+        padding: 0.6rem 1.25rem !important;
+        border-radius: 8px !important;
         border: none !important;
         box-shadow: none !important;
         transition: all 0.2s ease !important;
@@ -771,7 +776,7 @@ st.markdown("""
         white-space: nowrap !important;
         font-family: 'Inter', 'Roboto', sans-serif !important;
         width: max-content !important;
-        min-width: max-content !important;
+        min-width: fit-content !important;
         max-width: max-content !important;
         height: auto !important;
         min-height: 40px !important;
@@ -784,7 +789,7 @@ st.markdown("""
         box-sizing: border-box !important;
         word-break: keep-all !important;
         overflow-wrap: normal !important;
-        flex-shrink: 0 !important;
+        flex-shrink: 1 !important;
         vertical-align: middle !important;
         margin: 0 !important;
         overflow: visible !important;
@@ -852,29 +857,29 @@ st.markdown("""
     
     /* Hover Effect - Subtle Green Accent */
     button[key^="nav_"]:hover {
-        background: rgba(26, 188, 156, 0.15) !important;
+        background: rgba(26, 188, 156, 0.25) !important;
         color: rgba(255, 255, 255, 1) !important;
-        transform: none !important;
-        box-shadow: none !important;
+        transform: translateY(-1px) !important;
+        box-shadow: 0 2px 8px rgba(26, 188, 156, 0.2) !important;
     }
     
     /* Active State - Subtle Green Background */
     button[key^="nav_"]:active,
     button[key^="nav_"]:focus {
-        background: rgba(26, 188, 156, 0.25) !important;
+        background: rgba(26, 188, 156, 0.35) !important;
         color: #ffffff !important;
         outline: none !important;
-        box-shadow: none !important;
+        box-shadow: 0 2px 8px rgba(26, 188, 156, 0.3) !important;
     }
     
     /* Active page indicator - Enhanced hover for active items */
     button[key^="nav_"][aria-current="page"] {
-        background: rgba(26, 188, 156, 0.25) !important;
+        background: rgba(26, 188, 156, 0.4) !important;
         color: #ffffff !important;
     }
     
     button[key^="nav_"][aria-current="page"]:hover {
-        background: rgba(26, 188, 156, 0.3) !important;
+        background: rgba(26, 188, 156, 0.5) !important;
         color: #ffffff !important;
     }
     
@@ -900,16 +905,23 @@ st.markdown("""
             height: auto !important;
             min-height: 52px !important;
             max-height: none !important;
-            gap: 0.5rem !important;
+            gap: 0.75rem !important;
         }
         .navbar-brand {
             font-size: 1.4rem !important;
+            flex-shrink: 0 !important;
+        }
+        .navbar-wrapper ~ div [data-testid="column"]:first-child {
+            flex-shrink: 0 !important;
         }
         .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
         div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
             height: auto !important;
             min-height: 36px !important;
             max-height: none !important;
+            padding: 0 0.2rem !important;
+            flex-shrink: 1 !important;
+            flex-basis: auto !important;
         }
         .navbar-wrapper ~ div .stButton,
         div:has(.navbar-wrapper) ~ div .stButton {
@@ -919,14 +931,17 @@ st.markdown("""
         }
         button[key^="nav_"] {
             font-size: 0.8rem !important;
-            padding: 0.4rem 0.75rem !important;
+            padding: 0.5rem 1rem !important;
             height: auto !important;
             min-height: 36px !important;
             max-height: none !important;
             white-space: nowrap !important;
+            flex-shrink: 1 !important;
+            min-width: fit-content !important;
         }
         button[key="nav_Model Performance"] {
             font-size: 0.75rem !important;
+            padding: 0.5rem 0.9rem !important;
         }
     }
     
@@ -938,36 +953,57 @@ st.markdown("""
             height: auto !important;
             min-height: 48px !important;
             max-height: none !important;
-            gap: 0.35rem !important;
+            gap: 0.5rem !important;
             flex-wrap: nowrap !important;
             overflow-x: auto !important;
             overflow-y: hidden !important;
+            -webkit-overflow-scrolling: touch !important;
         }
         .navbar-brand {
             font-size: 1.2rem !important;
+            flex-shrink: 0 !important;
+        }
+        .navbar-wrapper ~ div [data-testid="column"]:first-child {
+            flex-shrink: 0 !important;
+            min-width: fit-content !important;
         }
         .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
         div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
             height: auto !important;
             min-height: 32px !important;
             max-height: none !important;
+            padding: 0 0.15rem !important;
+            flex-shrink: 1 !important;
+            flex-basis: auto !important;
         }
         .navbar-wrapper ~ div .stButton,
         div:has(.navbar-wrapper) ~ div .stButton {
             height: auto !important;
             min-height: 32px !important;
             max-height: none !important;
+            width: max-content !important;
         }
         button[key^="nav_"] {
             font-size: 0.75rem !important;
-            padding: 0.35rem 0.6rem !important;
+            padding: 0.4rem 0.75rem !important;
             height: auto !important;
             min-height: 32px !important;
             max-height: none !important;
             white-space: nowrap !important;
+            flex-shrink: 1 !important;
+            min-width: fit-content !important;
         }
         button[key="nav_Model Performance"] {
             font-size: 0.7rem !important;
+            padding: 0.4rem 0.65rem !important;
+        }
+        button[key="nav_Data Analysis"] {
+            font-size: 0.72rem !important;
+            padding: 0.4rem 0.7rem !important;
+        }
+        button[key="nav_Price Prediction"] {
+            font-size: 0.72rem !important;
+            padding: 0.4rem 0.7rem !important;
         }
     }
     
@@ -979,33 +1015,55 @@ st.markdown("""
             height: auto !important;
             min-height: 44px !important;
             max-height: none !important;
-            gap: 0.25rem !important;
+            gap: 0.4rem !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
         }
         .navbar-brand {
             font-size: 1.1rem !important;
+            flex-shrink: 0 !important;
+        }
+        .navbar-wrapper ~ div [data-testid="column"]:first-child {
+            flex-shrink: 0 !important;
+            min-width: fit-content !important;
         }
         .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
         div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
             height: auto !important;
             min-height: 30px !important;
             max-height: none !important;
+            padding: 0 0.1rem !important;
+            flex-shrink: 1 !important;
+            flex-basis: auto !important;
         }
         .navbar-wrapper ~ div .stButton,
         div:has(.navbar-wrapper) ~ div .stButton {
             height: auto !important;
             min-height: 30px !important;
             max-height: none !important;
+            width: max-content !important;
         }
         button[key^="nav_"] {
             font-size: 0.7rem !important;
-            padding: 0.3rem 0.5rem !important;
+            padding: 0.35rem 0.6rem !important;
             height: auto !important;
             min-height: 30px !important;
             max-height: none !important;
             white-space: nowrap !important;
+            flex-shrink: 1 !important;
+            min-width: fit-content !important;
         }
         button[key="nav_Model Performance"] {
             font-size: 0.65rem !important;
+            padding: 0.35rem 0.55rem !important;
+        }
+        button[key="nav_Data Analysis"] {
+            font-size: 0.67rem !important;
+            padding: 0.35rem 0.58rem !important;
+        }
+        button[key="nav_Price Prediction"] {
+            font-size: 0.67rem !important;
+            padding: 0.35rem 0.58rem !important;
         }
     }
     </style>
@@ -1017,31 +1075,43 @@ st.markdown("""
     (function() {{
         function forceSingleLineButtons() {{
             const navButtons = document.querySelectorAll('button[key^="nav_"]');
+            const isMobile = window.innerWidth <= 768;
+            const isTablet = window.innerWidth <= 1024 && window.innerWidth > 768;
+            
             navButtons.forEach(btn => {{
                 // Force single line
                 btn.style.setProperty('white-space', 'nowrap', 'important');
                 btn.style.setProperty('width', 'max-content', 'important');
-                btn.style.setProperty('min-width', 'max-content', 'important');
+                btn.style.setProperty('min-width', 'fit-content', 'important');
                 btn.style.setProperty('max-width', 'max-content', 'important');
+                
+                // Responsive font sizing
+                if (isMobile) {{
+                    btn.style.setProperty('font-size', '0.75rem', 'important');
+                    btn.style.setProperty('padding', '0.4rem 0.75rem', 'important');
+                }} else if (isTablet) {{
+                    btn.style.setProperty('font-size', '0.8rem', 'important');
+                    btn.style.setProperty('padding', '0.5rem 1rem', 'important');
+                }}
                 
                 // Force parent containers to not constrain
                 let parent = btn.parentElement;
                 while (parent && !parent.hasAttribute('data-testid')) {{
                     parent.style.setProperty('width', 'auto', 'important');
-                    parent.style.setProperty('min-width', 'max-content', 'important');
+                    parent.style.setProperty('min-width', 'fit-content', 'important');
                     parent.style.setProperty('max-width', 'none', 'important');
                     parent = parent.parentElement;
                 }}
                 
-                // Force column to not constrain
+                // Force column to allow shrinking on mobile
                 const column = btn.closest('[data-testid="column"]');
                 if (column) {{
                     column.style.setProperty('width', 'auto', 'important');
-                    column.style.setProperty('min-width', 'max-content', 'important');
+                    column.style.setProperty('min-width', 'fit-content', 'important');
                     column.style.setProperty('max-width', 'max-content', 'important');
                     column.style.setProperty('flex-basis', 'auto', 'important');
                     column.style.setProperty('flex-grow', '0', 'important');
-                    column.style.setProperty('flex-shrink', '0', 'important');
+                    column.style.setProperty('flex-shrink', isMobile ? '1' : '1', 'important');
                 }}
             }});
         }}
@@ -1086,9 +1156,14 @@ st.markdown("""
             subtree: true
         }});
         
-        // Also force on window resize
+        // Also force on window resize with debounce
+        let resizeTimeout;
         window.addEventListener('resize', function() {{
-            forceSingleLineButtons();
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(function() {{
+                forceSingleLineButtons();
+                updateActiveNav();
+            }}, 100);
         });
     }})();
     </script>
