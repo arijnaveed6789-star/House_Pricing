@@ -609,13 +609,13 @@ st.markdown("""
         flex-direction: row !important;
         align-items: center !important;
         justify-content: flex-start !important;
-        gap: 1rem !important;
+        gap: 0.85rem !important;
         margin: 0 !important;
-        padding: 0.75rem 2rem !important;
+        padding: 0.5rem 2rem !important;
         background: linear-gradient(135deg, #1a1f2e 0%, #2c3542 50%, #1a1f2e 100%) !important;
         width: 100% !important;
         height: auto !important;
-        min-height: 56px !important;
+        min-height: 40px !important;
         max-height: none !important;
         box-sizing: border-box !important;
         flex-wrap: nowrap !important;
@@ -663,12 +663,12 @@ st.markdown("""
     /* CRITICAL: Override Streamlit's column width calculation completely */
     .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
     div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
-        flex: 0 1 auto !important;
+        flex: 0 0 auto !important;
         flex-basis: auto !important;
         flex-grow: 0 !important;
-        flex-shrink: 1 !important;
+        flex-shrink: 0 !important;
         width: auto !important;
-        min-width: fit-content !important;
+        min-width: max-content !important;
         max-width: max-content !important;
     }
     
@@ -687,18 +687,18 @@ st.markdown("""
     
     /* Brand/Logo - Left Aligned, Vertically Centered */
     .navbar-brand {
-        font-size: 1.5rem !important;
+        font-size: 1.05rem !important;
         font-weight: 1000 !important;
         color: #000000 !important;
         letter-spacing: -0.3px !important;
         white-space: nowrap !important;
         font-family: 'Inter', 'Poppins', sans-serif !important;
-        margin: 10px !important;
+        margin: 6px !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: flex-start !important;
-        height: 40px !important;
-        min-height: 40px !important;
+        height: 26px !important;
+        min-height: 26px !important;
         flex-shrink: 0 !important;
         line-height: 1.2 !important;
         vertical-align: middle !important;
@@ -726,19 +726,27 @@ st.markdown("""
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        flex: 0 1 auto !important;
+        flex: 0 0 auto !important;
         flex-basis: auto !important;
         flex-grow: 0 !important;
-        flex-shrink: 1 !important;
-        padding: 0 0.25rem !important;
+        flex-shrink: 0 !important;
+        padding: 0 !important;
         margin: 0 !important;
         width: auto !important;
-        min-width: fit-content !important;
-        max-width: none !important;
+        min-width: max-content !important;
+        max-width: max-content !important;
         height: auto !important;
-        min-height: 40px !important;
+        min-height: 26px !important;
         max-height: none !important;
         overflow: visible !important;
+    }
+    
+    /* Force remove all width constraints from Streamlit columns */
+    .navbar-wrapper ~ div [data-testid="column"]:not(:first-child)[style*="width"],
+    div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child)[style*="width"] {
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: max-content !important;
     }
     
     /* Button wrapper styling - Transparent background, link-like */
@@ -750,13 +758,22 @@ st.markdown("""
         min-width: max-content !important;
         max-width: max-content !important;
         height: auto !important;
-        min-height: 40px !important;
+        min-height: 26px !important;
         max-height: none !important;
         background: transparent !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         overflow: visible !important;
+        flex-shrink: 0 !important;
+    }
+    
+    /* Force button wrapper to not constrain */
+    .navbar-wrapper ~ div [data-testid="column"]:not(:first-child) .stButton,
+    div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) .stButton {
+        width: max-content !important;
+        min-width: max-content !important;
+        max-width: max-content !important;
     }
     
     /* Navigation Links - Styled as Links, NOT Buttons */
@@ -764,22 +781,22 @@ st.markdown("""
         background: rgba(26, 188, 156, 0.1) !important;
         color: rgba(255, 255, 255, 0.95) !important;
         font-weight: 500 !important;
-        font-size: 0.875rem !important;
-        padding: 0.6rem 1.25rem !important;
-        border-radius: 8px !important;
+        font-size: 0.65rem !important;
+        padding: 0.35rem 0.8rem !important;
+        border-radius: 5px !important;
         border: none !important;
         box-shadow: none !important;
         transition: all 0.2s ease !important;
         cursor: pointer !important;
         text-transform: none !important;
-        letter-spacing: 0.1px !important;
+        letter-spacing: 0.03px !important;
         white-space: nowrap !important;
         font-family: 'Inter', 'Roboto', sans-serif !important;
-        width: max-content !important;
-        min-width: fit-content !important;
-        max-width: max-content !important;
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
         height: auto !important;
-        min-height: 40px !important;
+        min-height: 26px !important;
         max-height: none !important;
         display: inline-flex !important;
         align-items: center !important;
@@ -789,10 +806,16 @@ st.markdown("""
         box-sizing: border-box !important;
         word-break: keep-all !important;
         overflow-wrap: normal !important;
-        flex-shrink: 1 !important;
+        flex-shrink: 0 !important;
         vertical-align: middle !important;
         margin: 0 !important;
         overflow: visible !important;
+    }
+    
+    /* Force all button text to display fully */
+    button[key^="nav_"]::before,
+    button[key^="nav_"]::after {
+        display: none !important;
     }
     
     /* Prevent text wrapping - Force single line */
@@ -813,29 +836,63 @@ st.markdown("""
         overflow-wrap: normal !important;
     }
     
-    /* Model Performance - Slightly smaller font to fit */
+    /* Model Performance - Ensure full text display */
     button[key="nav_Model Performance"] {
-        font-size: 0.8rem !important;
+        font-size: 0.62rem !important;
         letter-spacing: 0px !important;
         white-space: nowrap !important;
-        width: max-content !important;
+        width: auto !important;
         min-width: max-content !important;
+        max-width: none !important;
+        padding: 0.35rem 0.75rem !important;
+        flex-shrink: 0 !important;
+        overflow: visible !important;
     }
     
-    /* Price Prediction - Ensure single line, slightly smaller font */
+    /* Price Prediction - Ensure full text display */
     button[key="nav_Price Prediction"] {
         white-space: nowrap !important;
-        font-size: 0.82rem !important;
-        width: max-content !important;
+        font-size: 0.62rem !important;
+        width: auto !important;
         min-width: max-content !important;
+        max-width: none !important;
+        padding: 0.35rem 0.75rem !important;
+        flex-shrink: 0 !important;
+        overflow: visible !important;
     }
     
-    /* Data Analysis - Ensure single line, slightly smaller font */
+    /* Data Analysis - Ensure full text display */
     button[key="nav_Data Analysis"] {
         white-space: nowrap !important;
-        font-size: 0.82rem !important;
-        width: max-content !important;
+        font-size: 0.62rem !important;
+        width: auto !important;
         min-width: max-content !important;
+        max-width: none !important;
+        padding: 0.35rem 0.75rem !important;
+        flex-shrink: 0 !important;
+        overflow: visible !important;
+    }
+    
+    /* Home button - Ensure full text display */
+    button[key="nav_Home"] {
+        white-space: nowrap !important;
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        padding: 0.35rem 0.8rem !important;
+        flex-shrink: 0 !important;
+        overflow: visible !important;
+    }
+    
+    /* Conclusion button - Ensure full text display */
+    button[key="nav_Conclusion"] {
+        white-space: nowrap !important;
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        padding: 0.35rem 0.8rem !important;
+        flex-shrink: 0 !important;
+        overflow: visible !important;
     }
     
     /* Force all button text to single line - override any Streamlit defaults */
@@ -901,14 +958,14 @@ st.markdown("""
     @media (max-width: 1024px) {
         .navbar-wrapper ~ div:has([data-testid="column"]),
         div:has(.navbar-wrapper) ~ div:has([data-testid="column"]) {
-            padding: 0.625rem 1.5rem !important;
+            padding: 0.45rem 1.5rem !important;
             height: auto !important;
-            min-height: 52px !important;
+            min-height: 36px !important;
             max-height: none !important;
             gap: 0.75rem !important;
         }
         .navbar-brand {
-            font-size: 1.4rem !important;
+            font-size: 1rem !important;
             flex-shrink: 0 !important;
         }
         .navbar-wrapper ~ div [data-testid="column"]:first-child {
@@ -917,31 +974,39 @@ st.markdown("""
         .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
         div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
             height: auto !important;
-            min-height: 36px !important;
+            min-height: 24px !important;
             max-height: none !important;
             padding: 0 0.2rem !important;
-            flex-shrink: 1 !important;
+            flex-shrink: 0 !important;
             flex-basis: auto !important;
         }
         .navbar-wrapper ~ div .stButton,
         div:has(.navbar-wrapper) ~ div .stButton {
             height: auto !important;
-            min-height: 36px !important;
+            min-height: 24px !important;
             max-height: none !important;
         }
         button[key^="nav_"] {
-            font-size: 0.8rem !important;
-            padding: 0.5rem 1rem !important;
+            font-size: 0.62rem !important;
+            padding: 0.32rem 0.75rem !important;
             height: auto !important;
-            min-height: 36px !important;
+            min-height: 24px !important;
             max-height: none !important;
             white-space: nowrap !important;
-            flex-shrink: 1 !important;
-            min-width: fit-content !important;
+            flex-shrink: 0 !important;
+            min-width: max-content !important;
         }
         button[key="nav_Model Performance"] {
-            font-size: 0.75rem !important;
-            padding: 0.5rem 0.9rem !important;
+            font-size: 0.6rem !important;
+            padding: 0.32rem 0.7rem !important;
+        }
+        button[key="nav_Price Prediction"] {
+            font-size: 0.6rem !important;
+            padding: 0.32rem 0.7rem !important;
+        }
+        button[key="nav_Data Analysis"] {
+            font-size: 0.6rem !important;
+            padding: 0.32rem 0.7rem !important;
         }
     }
     
@@ -949,18 +1014,18 @@ st.markdown("""
     @media (max-width: 768px) {
         .navbar-wrapper ~ div:has([data-testid="column"]),
         div:has(.navbar-wrapper) ~ div:has([data-testid="column"]) {
-            padding: 0.5rem 1rem !important;
+            padding: 0.45rem 1rem !important;
             height: auto !important;
-            min-height: 48px !important;
+            min-height: 40px !important;
             max-height: none !important;
-            gap: 0.5rem !important;
+            gap: 0.65rem !important;
             flex-wrap: nowrap !important;
             overflow-x: auto !important;
             overflow-y: hidden !important;
             -webkit-overflow-scrolling: touch !important;
         }
         .navbar-brand {
-            font-size: 1.2rem !important;
+            font-size: 1.05rem !important;
             flex-shrink: 0 !important;
         }
         .navbar-wrapper ~ div [data-testid="column"]:first-child {
@@ -970,40 +1035,40 @@ st.markdown("""
         .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
         div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
             height: auto !important;
-            min-height: 32px !important;
+            min-height: 28px !important;
             max-height: none !important;
             padding: 0 0.15rem !important;
-            flex-shrink: 1 !important;
+            flex-shrink: 0 !important;
             flex-basis: auto !important;
         }
         .navbar-wrapper ~ div .stButton,
         div:has(.navbar-wrapper) ~ div .stButton {
             height: auto !important;
-            min-height: 32px !important;
+            min-height: 28px !important;
             max-height: none !important;
             width: max-content !important;
         }
         button[key^="nav_"] {
-            font-size: 0.75rem !important;
-            padding: 0.4rem 0.75rem !important;
+            font-size: 0.65rem !important;
+            padding: 0.35rem 0.7rem !important;
             height: auto !important;
-            min-height: 32px !important;
+            min-height: 28px !important;
             max-height: none !important;
             white-space: nowrap !important;
-            flex-shrink: 1 !important;
-            min-width: fit-content !important;
+            flex-shrink: 0 !important;
+            min-width: max-content !important;
         }
         button[key="nav_Model Performance"] {
-            font-size: 0.7rem !important;
-            padding: 0.4rem 0.65rem !important;
+            font-size: 0.63rem !important;
+            padding: 0.35rem 0.65rem !important;
         }
         button[key="nav_Data Analysis"] {
-            font-size: 0.72rem !important;
-            padding: 0.4rem 0.7rem !important;
+            font-size: 0.63rem !important;
+            padding: 0.35rem 0.65rem !important;
         }
         button[key="nav_Price Prediction"] {
-            font-size: 0.72rem !important;
-            padding: 0.4rem 0.7rem !important;
+            font-size: 0.63rem !important;
+            padding: 0.35rem 0.65rem !important;
         }
     }
     
@@ -1011,16 +1076,16 @@ st.markdown("""
     @media (max-width: 480px) {
         .navbar-wrapper ~ div:has([data-testid="column"]),
         div:has(.navbar-wrapper) ~ div:has([data-testid="column"]) {
-            padding: 0.45rem 0.75rem !important;
+            padding: 0.4rem 0.75rem !important;
             height: auto !important;
-            min-height: 44px !important;
+            min-height: 38px !important;
             max-height: none !important;
-            gap: 0.4rem !important;
+            gap: 0.5rem !important;
             overflow-x: auto !important;
             -webkit-overflow-scrolling: touch !important;
         }
         .navbar-brand {
-            font-size: 1.1rem !important;
+            font-size: 1rem !important;
             flex-shrink: 0 !important;
         }
         .navbar-wrapper ~ div [data-testid="column"]:first-child {
@@ -1030,40 +1095,40 @@ st.markdown("""
         .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
         div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
             height: auto !important;
-            min-height: 30px !important;
+            min-height: 26px !important;
             max-height: none !important;
             padding: 0 0.1rem !important;
-            flex-shrink: 1 !important;
+            flex-shrink: 0 !important;
             flex-basis: auto !important;
         }
         .navbar-wrapper ~ div .stButton,
         div:has(.navbar-wrapper) ~ div .stButton {
             height: auto !important;
-            min-height: 30px !important;
+            min-height: 26px !important;
             max-height: none !important;
             width: max-content !important;
         }
         button[key^="nav_"] {
-            font-size: 0.7rem !important;
-            padding: 0.35rem 0.6rem !important;
+            font-size: 0.6rem !important;
+            padding: 0.3rem 0.6rem !important;
             height: auto !important;
-            min-height: 30px !important;
+            min-height: 26px !important;
             max-height: none !important;
             white-space: nowrap !important;
-            flex-shrink: 1 !important;
-            min-width: fit-content !important;
+            flex-shrink: 0 !important;
+            min-width: max-content !important;
         }
         button[key="nav_Model Performance"] {
-            font-size: 0.65rem !important;
-            padding: 0.35rem 0.55rem !important;
+            font-size: 0.58rem !important;
+            padding: 0.3rem 0.55rem !important;
         }
         button[key="nav_Data Analysis"] {
-            font-size: 0.67rem !important;
-            padding: 0.35rem 0.58rem !important;
+            font-size: 0.58rem !important;
+            padding: 0.3rem 0.55rem !important;
         }
         button[key="nav_Price Prediction"] {
-            font-size: 0.67rem !important;
-            padding: 0.35rem 0.58rem !important;
+            font-size: 0.58rem !important;
+            padding: 0.3rem 0.55rem !important;
         }
     }
     </style>
@@ -1079,40 +1144,66 @@ st.markdown("""
             const isTablet = window.innerWidth <= 1024 && window.innerWidth > 768;
             
             navButtons.forEach(btn => {{
-                // Force single line
+                // Force single line and full width display
                 btn.style.setProperty('white-space', 'nowrap', 'important');
-                btn.style.setProperty('width', 'max-content', 'important');
-                btn.style.setProperty('min-width', 'fit-content', 'important');
-                btn.style.setProperty('max-width', 'max-content', 'important');
+                btn.style.setProperty('width', 'auto', 'important');
+                btn.style.setProperty('min-width', 'max-content', 'important');
+                btn.style.setProperty('max-width', 'none', 'important');
+                btn.style.setProperty('flex-shrink', '0', 'important');
+                btn.style.setProperty('overflow', 'visible', 'important');
+                btn.style.setProperty('text-overflow', 'clip', 'important');
                 
                 // Responsive font sizing
                 if (isMobile) {{
-                    btn.style.setProperty('font-size', '0.75rem', 'important');
-                    btn.style.setProperty('padding', '0.4rem 0.75rem', 'important');
+                    btn.style.setProperty('font-size', '0.58rem', 'important');
+                    btn.style.setProperty('padding', '0.3rem 0.6rem', 'important');
                 }} else if (isTablet) {{
-                    btn.style.setProperty('font-size', '0.8rem', 'important');
-                    btn.style.setProperty('padding', '0.5rem 1rem', 'important');
+                    btn.style.setProperty('font-size', '0.62rem', 'important');
+                    btn.style.setProperty('padding', '0.32rem 0.75rem', 'important');
                 }}
                 
-                // Force parent containers to not constrain
+                // Force ALL parent containers to not constrain - AGGRESSIVE
                 let parent = btn.parentElement;
-                while (parent && !parent.hasAttribute('data-testid')) {{
+                let depth = 0;
+                while (parent && depth < 10) {{
                     parent.style.setProperty('width', 'auto', 'important');
-                    parent.style.setProperty('min-width', 'fit-content', 'important');
+                    parent.style.setProperty('min-width', 'max-content', 'important');
                     parent.style.setProperty('max-width', 'none', 'important');
+                    parent.style.setProperty('overflow', 'visible', 'important');
+                    if (parent.classList && parent.classList.contains('stButton')) {{
+                        parent.style.setProperty('flex-shrink', '0', 'important');
+                        parent.style.setProperty('width', 'max-content', 'important');
+                    }}
                     parent = parent.parentElement;
+                    depth++;
                 }}
                 
-                // Force column to allow shrinking on mobile
+                // Force column to maintain button width - VERY AGGRESSIVE
                 const column = btn.closest('[data-testid="column"]');
                 if (column) {{
                     column.style.setProperty('width', 'auto', 'important');
-                    column.style.setProperty('min-width', 'fit-content', 'important');
+                    column.style.setProperty('min-width', 'max-content', 'important');
                     column.style.setProperty('max-width', 'max-content', 'important');
                     column.style.setProperty('flex-basis', 'auto', 'important');
                     column.style.setProperty('flex-grow', '0', 'important');
-                    column.style.setProperty('flex-shrink', isMobile ? '1' : '1', 'important');
+                    column.style.setProperty('flex-shrink', '0', 'important');
+                    column.style.setProperty('overflow', 'visible', 'important');
+                    
+                    // Remove any inline width styles that Streamlit might add
+                    const currentStyle = column.getAttribute('style') || '';
+                    if (currentStyle.includes('width')) {{
+                        column.style.cssText = column.style.cssText.replace(/width[^;]*;?/gi, '');
+                        column.style.setProperty('width', 'auto', 'important');
+                    }}
                 }}
+                
+                // Calculate and set explicit width based on text content
+                setTimeout(() => {{
+                    const textWidth = btn.scrollWidth;
+                    if (textWidth > 0 && textWidth > btn.offsetWidth) {{
+                        btn.style.setProperty('width', (textWidth + 10) + 'px', 'important');
+                    }}
+                }}, 10);
             }});
         }}
         
