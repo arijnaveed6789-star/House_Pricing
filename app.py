@@ -59,6 +59,7 @@ st.markdown("""
         padding-left: 0 !important;
         padding-right: 0 !important;
         max-width: 100% !important;
+        margin-top: 0 !important;
     }
     
     /* Remove default block spacing */
@@ -67,64 +68,16 @@ st.markdown("""
         margin: 0 !important;
     }
     
-    /* Remove spacing after navigation */
-    div:has(> div > button[key^="nav_"]) {
-        margin-bottom: 0 !important;
-        padding-bottom: 0 !important;
+    /* Force first element (navbar) to top */
+    .block-container > div:first-child {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
     }
     
-    /* Ensure no gap between nav and content */
+    /* Ensure no gap for hero section */
     .hero-section {
         margin-top: 0 !important;
     }
-    
-    /* Top Navigation Bar - Edge to Edge */
-    .top-nav {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        width: 100%;
-        background: linear-gradient(135deg, #1f3b4d 0%, #2c3e50 100%);
-        padding: 1rem 2rem;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        z-index: 1000;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 2rem;
-    }
-    
-    .nav-brand {
-        font-size: 2.5rem;
-        font-weight: 1500 bold;
-        color: white;
-        letter-spacing: -0.5px;
-        white-space: nowrap;
-    }
-    
-    .nav-buttons-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        flex: 1;
-        flex-wrap: wrap;
-        padding-top: 100px !important;
-    }
-    
-    .nav-links {
-        display: flex;
-        gap: 1rem;
-        list-style: none;
-        justify-content: center;
-        align-items: center;
-        margin: 0 auto;
-    }
-    
-    /* Navigation Buttons - Clean and Minimalistic (styles moved to inline for better control) */
-    
-    /* Navigation spacing handled inline */
     
     /* Remove spacing after columns */
     [data-testid="column"] {
@@ -135,31 +88,6 @@ st.markdown("""
     .block-container > div:first-child {
         margin-top: 0 !important;
         padding-top: 0 !important;
-    }
-    
-    /* Remove gap between navigation and content */
-    div:has(button[key^="nav_"]) ~ div {
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-    }
-    
-    @media (max-width: 768px) {
-        .top-nav {
-            flex-wrap: wrap;
-            padding: 1rem;
-        }
-        .nav-brand {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 0.5rem;
-        }
-        .nav-buttons-container {
-            width: 100%;
-        }
-        button[key^="nav_"] {
-            padding: 0.6rem 1rem !important;
-            font-size: 0.85rem !important;
-        }
     }
     
     /* Main Content - Edge to Edge */
@@ -574,831 +502,552 @@ model, scaler, label_encoders, feature_names = load_model()
 if 'page' not in st.session_state:
     st.session_state.page = 'Home'
 
-# Top Navigation Bar - Clean, Professional, Link-Style
+# Use session state page
+current_page = st.session_state.page
+
+# ============================================================================
+# NAVIGATION BAR
+# ============================================================================
+
+# Navigation Bar CSS
 st.markdown("""
-    <div class="navbar-wrapper">
+    <style>
+    /* Navigation Bar Container */
+    .navbar-wrapper {
+        background: linear-gradient(135deg, #1a1f2e 0%, #2c3542 50%, #1a1f2e 100%);
+        padding: 0 2rem 0.75rem 2rem;
+        padding-top: 0 !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        margin-bottom: 0;
+        margin-top: 0 !important;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 3rem;
+        position: relative;
+        top: 0;
+    }
+    
+    /* Logo Styling - Brand Logo */
+    .navbar-logo {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: #000000;
+        letter-spacing: 0.5px;
+        white-space: nowrap;
+        font-family: 'Inter', 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .navbar-logo:hover {
+        transform: scale(1.05);
+        color: #1a1a1a;
+    }
+    
+    /* Logo Icon */
+    .navbar-logo-icon {
+        font-size: 1.8rem;
+        display: inline-block;
+        vertical-align: middle;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        transition: transform 0.3s ease;
+    }
+    
+    .navbar-logo:hover .navbar-logo-icon {
+        transform: scale(1.1) rotate(5deg);
+    }
+    
+    /* Logo Text */
+    .navbar-logo-text {
+        color: #000000;
+        font-weight: 800;
+        letter-spacing: 1px;
+    }
+    
+    /* Navigation Buttons Container */
+    .nav-buttons-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 2rem;
+        flex-wrap: nowrap;
+    }
+    
+    /* Navigation Button Styling */
+    button[key^="nav_"] {
+        background: transparent !important;
+        color: rgba(255, 255, 255, 0.85) !important;
+        font-weight: 500 !important;
+        font-size: 0.95rem !important;
+        padding: 0.5rem 1.2rem !important;
+        border-radius: 6px !important;
+        border: none !important;
+        box-shadow: none !important;
+        transition: all 0.3s ease !important;
+        cursor: pointer !important;
+        white-space: nowrap !important;
+        font-family: 'Inter', 'Roboto', sans-serif !important;
+        margin: 0 !important;
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        text-overflow: clip !important;
+        overflow: visible !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
+    }
+    
+    button[key^="nav_"]:hover {
+        background: rgba(255, 255, 255, 0.1) !important;
+        color: #ffffff !important;
+        transform: translateY(-1px) !important;
+    }
+    
+    button[key^="nav_"]:active,
+    button[key^="nav_"]:focus {
+        background: rgba(255, 255, 255, 0.15) !important;
+        color: #ffffff !important;
+        outline: none !important;
+    }
+    
+    /* Active Page Button */
+    button[key^="nav_"].nav-active {
+        background: rgba(255, 255, 255, 0.2) !important;
+        color: #ffffff !important;
+    }
+    
+    /* Streamlit button wrapper styling */
+    .nav-buttons-wrapper .stButton {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: auto !important;
+        flex-shrink: 0;
+    }
+    
+    /* Ensure buttons don't wrap - CRITICAL */
+    .nav-buttons-wrapper .stButton button,
+    button[key^="nav_"] {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
+        display: inline-block !important;
+    }
+    
+    /* Force single line for all button text */
+    button[key^="nav_"] * {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
+    }
+    
+    /* Laptop Screen Spacing (1024px - 1440px) - PRIMARY STYLING */
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        .navbar-wrapper {
+            padding: 0 2rem 0.7rem 2rem;
+            gap: 2.5rem;
+        }
+        .navbar-logo {
+            font-size: 1.3rem;
+        }
+        .navbar-logo-icon {
+            font-size: 1.6rem;
+        }
+        .navbar-logo-text {
+            letter-spacing: 0.8px;
+        }
+        .nav-buttons-wrapper {
+            gap: 2rem;
+        }
+        button[key^="nav_"] {
+            font-size: 0.9rem !important;
+            padding: 0.5rem 1.1rem !important;
+        }
+    }
+    
+    /* Desktop/Large Laptop (1440px+) */
+    @media (min-width: 1440px) {
+        .navbar-wrapper {
+            padding: 0 2.5rem 0.8rem 2.5rem;
+            gap: 3rem;
+        }
+        .navbar-logo {
+            font-size: 1.5rem;
+    }
+        .navbar-logo-icon {
+            font-size: 1.9rem;
+        }
+        .navbar-logo-text {
+            letter-spacing: 1.2px;
+        }
+        .nav-buttons-wrapper {
+            gap: 2.5rem;
+        }
+    button[key^="nav_"] {
+            font-size: 1rem !important;
+            padding: 0.6rem 1.3rem !important;
+        }
+    }
+    
+    /* Tablet (768px - 1024px) */
+    @media (max-width: 1023px) and (min-width: 768px) {
+        .navbar-wrapper {
+            padding: 0 1.5rem 0.6rem 1.5rem;
+            gap: 2rem;
+        }
+        .navbar-logo {
+            font-size: 1.2rem;
+    }
+        .navbar-logo-icon {
+            font-size: 1.5rem;
+    }
+        .navbar-logo-text {
+            letter-spacing: 0.6px;
+        }
+        .nav-buttons-wrapper {
+            gap: 1.5rem;
+    }
+    button[key^="nav_"] {
+        font-size: 0.85rem !important;
+            padding: 0.45rem 1rem !important;
+        }
+    }
+    
+    /* Mobile */
+    @media (max-width: 767px) {
+        .navbar-wrapper {
+            flex-direction: column;
+            gap: 0.75rem;
+            padding: 0 1rem 0.75rem 1rem;
+        }
+        .navbar-logo {
+            font-size: 1.1rem;
+        }
+        .navbar-logo-icon {
+            font-size: 1.4rem;
+    }
+        .navbar-logo-text {
+            letter-spacing: 0.5px;
+    }
+        .nav-buttons-wrapper {
+            gap: 0.75rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        button[key^="nav_"] {
+            font-size: 0.75rem !important;
+            padding: 0.4rem 0.85rem !important;
+        }
+    }
+    
+    /* Override Streamlit column spacing */
+    div:has(.navbar-logo) ~ div:has([data-testid="column"]) {
+        background: linear-gradient(135deg, #1a1f2e 0%, #2c3542 50%, #1a1f2e 100%) !important;
+        padding: 0 2rem 0.75rem 2rem !important;
+        padding-top: 0 !important;
+        margin: 0 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        gap: 2rem !important;
+    }
+    
+    /* Force navbar to top of page - Remove all top spacing */
+    div:has(.navbar-logo),
+    div:has(.navbar-logo) ~ div:has([data-testid="column"]),
+    div:has(button[key^="nav_"]) {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    /* Remove spacing from first element if it's navbar */
+    .block-container > div:first-child:has(.navbar-logo),
+    .block-container > div:first-child:has(button[key^="nav_"]),
+    .block-container > div:first-child [data-testid="column"]:has(.navbar-logo) {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    /* Ensure navbar container starts at top */
+    div:has(.navbar-logo) {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    /* Ensure columns don't wrap */
+    div:has(.navbar-logo) ~ div:has([data-testid="column"]) [data-testid="column"] {
+        flex-shrink: 0 !important;
+        flex-grow: 0 !important;
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+    }
+    
+    /* Specific fix for Model Performance button - prevent wrapping */
+    button[key="nav_Model Performance"] {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        display: inline-block !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Specific fix for Price Prediction button - prevent wrapping */
+    button[key="nav_Price Prediction"] {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        display: inline-block !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Force column for Model Performance to be wider */
+    div:has(button[key="nav_Model Performance"]) [data-testid="column"] {
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        flex-basis: auto !important;
+        flex-grow: 0 !important;
+        flex-shrink: 0 !important;
+    }
+    
+    /* Force column for Price Prediction to be wider */
+    div:has(button[key="nav_Price Prediction"]) [data-testid="column"] {
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        flex-basis: auto !important;
+        flex-grow: 0 !important;
+        flex-shrink: 0 !important;
+    }
+    </style>
 """, unsafe_allow_html=True)
 
-# Create navbar layout: brand on left, navigation links on right
+# Create navigation bar
 nav_pages = ["Home", "Data Analysis", "Model Performance", "Price Prediction", "Conclusion"]
-# Use flexible columns that adapt to screen size
-navbar_cols = st.columns([3] + [1] * len(nav_pages), gap="large")
 
+# Create navbar with logo and buttons in same row - wider columns for longer button names
+navbar_cols = st.columns([1.5, 1, 1.4, 1.4, 1.2, 1], gap="medium")
+
+# Logo column
 with navbar_cols[0]:
     st.markdown("""
-        <div class="navbar-brand">House Price Predictor</div>
+        <div class="navbar-logo" onclick="window.location.reload()" style="cursor: pointer;">
+            <span class="navbar-logo-icon">🏠</span>
+            <span class="navbar-logo-text">Dream Home</span>
+        </div>
     """, unsafe_allow_html=True)
 
-# Create navigation links (styled as links, not buttons) in remaining columns
+# Navigation buttons in remaining columns
 for idx, page_name in enumerate(nav_pages):
     with navbar_cols[idx + 1]:
         if st.button(page_name, key=f"nav_{page_name}", use_container_width=False):
             st.session_state.page = page_name
             st.rerun()
 
-st.markdown("""
-    </div>
-""", unsafe_allow_html=True)
-
+# Additional CSS to ensure proper layout and prevent text wrapping
 st.markdown("""
     <style>
-    /* Clean, Professional Navigation Bar - Fixed Height, Single Row */
-    .navbar-wrapper ~ div:has([data-testid="column"]),
-    div:has(.navbar-wrapper) ~ div:has([data-testid="column"]) {
-        display: flex !important;
-        flex-direction: row !important;
-        align-items: center !important;
-        justify-content: flex-start !important;
-        gap: 1.5rem !important;
-        margin: 0 !important;
-        padding: 0.4rem 2rem !important;
-        background: linear-gradient(135deg, #1a1f2e 0%, #2c3542 50%, #1a1f2e 100%) !important;
-        width: 100% !important;
-        height: auto !important;
-        min-height: 32px !important;
-        max-height: none !important;
-        box-sizing: border-box !important;
+    /* Force navbar row to stay horizontal */
+    div:has(.navbar-logo) ~ div:has([data-testid="column"]) {
         flex-wrap: nowrap !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
         overflow-x: visible !important;
-        overflow-y: visible !important;
     }
     
-    /* Override Streamlit column width calculation - force content-based sizing */
-    .navbar-wrapper ~ div [data-testid="column"],
-    div:has(.navbar-wrapper) ~ div [data-testid="column"] {
-        flex-basis: auto !important;
-        flex-grow: 0 !important;
-        flex-shrink: 1 !important;
-    }
-    
-    /* First column (brand) - takes remaining space */
-    .navbar-wrapper ~ div [data-testid="column"]:first-child,
-    div:has(.navbar-wrapper) ~ div [data-testid="column"]:first-child {
-        flex-grow: 1 !important;
-        flex-shrink: 1 !important;
-        min-width: 0 !important;
-    }
-    
-    /* Navigation columns - size to content, ignore Streamlit width */
-    .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
-    div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
-        flex-basis: auto !important;
-        flex-grow: 0 !important;
-        flex-shrink: 0 !important;
-        width: auto !important;
-        min-width: fit-content !important;
-        max-width: none !important;
-    }
-    
-    /* Override any Streamlit width styles on column elements */
-    .navbar-wrapper ~ div [data-testid="column"]:not(:first-child) > div,
-    div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) > div {
-        width: auto !important;
-        min-width: fit-content !important;
-        max-width: none !important;
-    }
-    
-    /* CRITICAL: Override Streamlit's column width calculation completely */
-    .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
-    div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
-        flex: 0 0 auto !important;
-        flex-basis: auto !important;
-        flex-grow: 0 !important;
-        flex-shrink: 0 !important;
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: max-content !important;
-    }
-    
-    /* Force all nested divs to not constrain width */
-    .navbar-wrapper ~ div [data-testid="column"]:not(:first-child) *,
-    div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) * {
-        max-width: none !important;
-    }
-    
-    /* Specifically target Streamlit's column width attribute */
-    .navbar-wrapper ~ div [data-testid="column"]:not(:first-child)[style*="width"],
-    div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child)[style*="width"] {
-        width: auto !important;
-        min-width: max-content !important;
-    }
-    
-    /* Brand/Logo - Left Aligned, Vertically Centered */
-    .navbar-brand {
-        font-size: 0.85rem !important;
-        font-weight: 1000 !important;
-        color: #000000 !important;
-        letter-spacing: -0.3px !important;
-        white-space: nowrap !important;
-        font-family: 'Inter', 'Poppins', sans-serif !important;
-        margin: 4px !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: flex-start !important;
-        height: 22px !important;
-        min-height: 22px !important;
-        flex-shrink: 0 !important;
-        line-height: 1.2 !important;
-        vertical-align: middle !important;
-        transform: translateY(1px) !important;
-    }
-    
-    /* Brand column - Left aligned, vertically centered with buttons */
-    .navbar-wrapper ~ div [data-testid="column"]:first-child,
-    div:has(.navbar-wrapper) ~ div [data-testid="column"]:first-child {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: flex-start !important;
-        flex: 0 1 auto !important;
-        flex-shrink: 0 !important;
-        margin-right: auto !important;
-        padding: 0 !important;
-        height: 100% !important;
-        min-height: 40px !important;
-        min-width: fit-content !important;
-    }
-    
-    /* Navigation link columns - Right aligned, compact uniform sizing */
-    .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
-    div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        flex: 0 0 auto !important;
-        flex-basis: auto !important;
-        flex-grow: 0 !important;
-        flex-shrink: 0 !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: max-content !important;
-        height: auto !important;
-        min-height: 22px !important;
-        max-height: none !important;
-        overflow: visible !important;
-    }
-    
-    /* Force remove all width constraints from Streamlit columns */
-    .navbar-wrapper ~ div [data-testid="column"]:not(:first-child)[style*="width"],
-    div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child)[style*="width"] {
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: max-content !important;
-    }
-    
-    /* Button wrapper styling - Transparent background, link-like */
-    .navbar-wrapper ~ div .stButton,
-    div:has(.navbar-wrapper) ~ div .stButton {
-        margin: 0 !important;
-        padding: 0 !important;
-        width: max-content !important;
-        min-width: max-content !important;
-        max-width: max-content !important;
-        height: auto !important;
-        min-height: 22px !important;
-        max-height: none !important;
-        background: transparent !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        overflow: visible !important;
-        flex-shrink: 0 !important;
-    }
-    
-    /* Force button wrapper to not constrain */
-    .navbar-wrapper ~ div [data-testid="column"]:not(:first-child) .stButton,
-    div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) .stButton {
-        width: max-content !important;
-        min-width: max-content !important;
-        max-width: max-content !important;
-    }
-    
-    /* Navigation Links - Styled as Links, NOT Buttons */
+    /* Prevent button text wrapping - AGGRESSIVE */
+    div:has(button[key^="nav_"]) button[key^="nav_"],
     button[key^="nav_"] {
-        background: rgba(26, 188, 156, 0.1) !important;
-        color: rgba(255, 255, 255, 0.95) !important;
-        font-weight: 500 !important;
-        font-size: 0.85rem !important;
-        padding: 0.5rem 1rem !important;
-        border-radius: 4px !important;
-        border: none !important;
-        box-shadow: none !important;
-        transition: all 0.2s ease !important;
-        cursor: pointer !important;
-        text-transform: none !important;
-        letter-spacing: 0.02px !important;
         white-space: nowrap !important;
-        font-family: 'Inter', 'Roboto', sans-serif !important;
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-        height: auto !important;
-        min-height: 22px !important;
-        max-height: none !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        line-height: 1.2 !important;
-        box-sizing: border-box !important;
         word-break: keep-all !important;
         overflow-wrap: normal !important;
-        flex-shrink: 0 !important;
-        vertical-align: middle !important;
-        margin: 0 !important;
-        overflow: visible !important;
+        text-overflow: clip !important;
+        display: inline-block !important;
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
     }
     
-    /* Force all button text to display fully */
-    button[key^="nav_"]::before,
-    button[key^="nav_"]::after {
-        display: none !important;
-    }
-    
-    /* Prevent text wrapping - Force single line */
+    /* Force all button content to single line */
     button[key^="nav_"] *,
     button[key^="nav_"] span,
     button[key^="nav_"] div,
-    button[key^="nav_"] p,
-    button[key^="nav_"]::before,
-    button[key^="nav_"]::after {
+    button[key^="nav_"] p {
         white-space: nowrap !important;
-        display: inline !important;
-        line-height: 1.2 !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
-        margin: 0 !important;
-        padding: 0 !important;
         word-break: keep-all !important;
         overflow-wrap: normal !important;
+        display: inline !important;
     }
     
-    /* Model Performance - Ensure full text display */
-    button[key="nav_Model Performance"] {
-        font-size: 0.53rem !important;
-        letter-spacing: 0px !important;
-        white-space: nowrap !important;
+    /* Button wrapper - prevent width constraints */
+    div:has(button[key^="nav_"]) .stButton {
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        padding: 0.25rem 0.55rem !important;
         flex-shrink: 0 !important;
-        overflow: visible !important;
     }
     
-    /* Price Prediction - Ensure full text display */
-    button[key="nav_Price Prediction"] {
-        white-space: nowrap !important;
-        font-size: 0.53rem !important;
+    /* Column constraints - allow content-based width */
+    div:has(button[key^="nav_"]) [data-testid="column"] {
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        padding: 0.25rem 0.55rem !important;
-        flex-shrink: 0 !important;
-        overflow: visible !important;
-    }
-    
-    /* Data Analysis - Ensure full text display */
-    button[key="nav_Data Analysis"] {
-        white-space: nowrap !important;
-        font-size: 0.53rem !important;
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-        padding: 0.25rem 0.55rem !important;
-        flex-shrink: 0 !important;
-        overflow: visible !important;
-    }
-    
-    /* Home button - Ensure full text display */
-    button[key="nav_Home"] {
-        white-space: nowrap !important;
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-        padding: 0.25rem 0.6rem !important;
-        flex-shrink: 0 !important;
-        overflow: visible !important;
-    }
-    
-    /* Conclusion button - Ensure full text display */
-    button[key="nav_Conclusion"] {
-        white-space: nowrap !important;
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-        padding: 0.25rem 0.6rem !important;
-        flex-shrink: 0 !important;
-        overflow: visible !important;
-    }
-    
-    /* Force all button text to single line - override any Streamlit defaults */
-    button[key^="nav_"] {
-        word-spacing: normal !important;
-        text-rendering: optimizeLegibility !important;
-        unicode-bidi: normal !important;
-        direction: ltr !important;
-        hyphens: none !important;
-        text-overflow: clip !important;
-    }
-    
-    /* Break out of any parent width constraints */
-    .navbar-wrapper ~ div [data-testid="column"]:not(:first-child) .stButton button,
-    div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) .stButton button {
-        position: relative !important;
-        z-index: 1 !important;
-    }
-    
-    /* Hover Effect - Subtle Green Accent */
-    button[key^="nav_"]:hover {
-        background: rgba(26, 188, 156, 0.25) !important;
-        color: rgba(255, 255, 255, 1) !important;
-        transform: translateY(-1px) !important;
-        box-shadow: 0 2px 8px rgba(26, 188, 156, 0.2) !important;
-    }
-    
-    /* Active State - Subtle Green Background */
-    button[key^="nav_"]:active,
-    button[key^="nav_"]:focus {
-        background: rgba(26, 188, 156, 0.35) !important;
-        color: #ffffff !important;
-        outline: none !important;
-        box-shadow: 0 2px 8px rgba(26, 188, 156, 0.3) !important;
-    }
-    
-    /* Active page indicator - Enhanced hover for active items */
-    button[key^="nav_"][aria-current="page"] {
-        background: rgba(26, 188, 156, 0.4) !important;
-        color: #ffffff !important;
-    }
-    
-    button[key^="nav_"][aria-current="page"]:hover {
-        background: rgba(26, 188, 156, 0.5) !important;
-        color: #ffffff !important;
-    }
-    
-    /* Remove default Streamlit spacing */
-    div:has(button[key^="nav_"]) {
-        margin-bottom: 0 !important;
-        padding-bottom: 0 !important;
-    }
-    
-    /* Ensure all navigation items align on same baseline */
-    .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
-    .navbar-wrapper ~ div [data-testid="column"]:not(:first-child) .stButton,
-    .navbar-wrapper ~ div [data-testid="column"]:not(:first-child) button {
-        vertical-align: middle !important;
-        align-items: center !important;
-    }
-    
-    /* Responsive Design - Tablet (maintains horizontal layout) */
-    @media (max-width: 1024px) {
-        .navbar-wrapper ~ div:has([data-testid="column"]),
-        div:has(.navbar-wrapper) ~ div:has([data-testid="column"]) {
-            padding: 0.35rem 1.5rem !important;
-            height: auto !important;
-            min-height: 28px !important;
-            max-height: none !important;
-            gap: 0.85rem !important;
-        }
-        .navbar-brand {
-            font-size: 0.8rem !important;
+        flex-basis: auto !important;
+        flex-grow: 0 !important;
             flex-shrink: 0 !important;
         }
-        .navbar-wrapper ~ div [data-testid="column"]:first-child {
+    
+    /* CRITICAL: Remove all width constraints from button columns */
+    div:has(button[key^="nav_"]) [data-testid="column"],
+    div:has(button[key^="nav_"]) [data-testid="column"] > div {
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        flex-basis: auto !important;
+        flex-grow: 0 !important;
             flex-shrink: 0 !important;
         }
-        .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
-        div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
-            height: auto !important;
-            min-height: 20px !important;
-            max-height: none !important;
-            padding: 0 0.2rem !important;
-            flex-shrink: 0 !important;
-            flex-basis: auto !important;
+    
+    /* Force Model Performance button to stay on one line */
+    button[key="nav_Model Performance"],
+    button[key="nav_Model Performance"] * {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
+        display: inline-block !important;
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
         }
-        .navbar-wrapper ~ div .stButton,
-        div:has(.navbar-wrapper) ~ div .stButton {
-            height: auto !important;
-            min-height: 20px !important;
-            max-height: none !important;
-        }
-        button[key^="nav_"] {
-            font-size: 0.53rem !important;
-            padding: 0.25rem 0.55rem !important;
-            height: auto !important;
-            min-height: 20px !important;
-            max-height: none !important;
+    
+    /* Force Price Prediction button to stay on one line */
+    button[key="nav_Price Prediction"],
+    button[key="nav_Price Prediction"] * {
             white-space: nowrap !important;
-            flex-shrink: 0 !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
+        display: inline-block !important;
+        width: auto !important;
             min-width: max-content !important;
-        }
-        button[key="nav_Model Performance"] {
-            font-size: 0.51rem !important;
-            padding: 0.25rem 0.5rem !important;
-        }
-        button[key="nav_Price Prediction"] {
-            font-size: 0.51rem !important;
-            padding: 0.25rem 0.5rem !important;
-        }
-        button[key="nav_Data Analysis"] {
-            font-size: 0.51rem !important;
-            padding: 0.25rem 0.5rem !important;
-        }
+        max-width: none !important;
     }
     
-    /* Responsive Design - Laptop (1024px - 1440px) */
+    /* Laptop-specific spacing adjustments */
     @media (min-width: 1024px) and (max-width: 1440px) {
-        .navbar-wrapper ~ div:has([data-testid="column"]),
-        div:has(.navbar-wrapper) ~ div:has([data-testid="column"]) {
-            padding: 0.5rem 2rem !important;
-            height: auto !important;
-            min-height: 40px !important;
-            max-height: none !important;
+        div:has(.navbar-logo) ~ div:has([data-testid="column"]) {
             gap: 2rem !important;
         }
-        .navbar-brand {
-            font-size: 1rem !important;
-            flex-shrink: 0 !important;
-        }
-        .navbar-wrapper ~ div [data-testid="column"]:first-child {
-            flex-shrink: 0 !important;
-        }
-        .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
-        div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
-            height: auto !important;
-            min-height: 32px !important;
-            max-height: none !important;
+        div:has(button[key^="nav_"]) [data-testid="column"] {
+            margin-right: 0 !important;
             padding: 0 0.5rem !important;
-            flex-shrink: 0 !important;
-            flex-basis: auto !important;
-            margin: 0 0.25rem !important;
         }
-        .navbar-wrapper ~ div .stButton,
-        div:has(.navbar-wrapper) ~ div .stButton {
-            height: auto !important;
-            min-height: 32px !important;
-            max-height: none !important;
-        }
-        button[key^="nav_"] {
-            font-size: 0.85rem !important;
-            padding: 0.5rem 1.2rem !important;
-            height: auto !important;
-            min-height: 32px !important;
-            max-height: none !important;
-            white-space: nowrap !important;
-            flex-shrink: 0 !important;
-            min-width: max-content !important;
-        }
-        button[key="nav_Model Performance"] {
-            font-size: 0.8rem !important;
-            padding: 0.5rem 1.1rem !important;
-        }
-        button[key="nav_Price Prediction"] {
-            font-size: 0.8rem !important;
-            padding: 0.5rem 1.1rem !important;
-        }
-        button[key="nav_Data Analysis"] {
-            font-size: 0.8rem !important;
-            padding: 0.5rem 1.1rem !important;
-        }
-    }
-    
-    /* Responsive Design - Desktop/Large Laptop (1440px+) */
-    @media (min-width: 1440px) {
-        .navbar-wrapper ~ div:has([data-testid="column"]),
-        div:has(.navbar-wrapper) ~ div:has([data-testid="column"]) {
-            padding: 0.6rem 2.5rem !important;
-            height: auto !important;
-            min-height: 44px !important;
-            max-height: none !important;
-            gap: 2.5rem !important;
-        }
-        .navbar-brand {
-            font-size: 1.1rem !important;
-            flex-shrink: 0 !important;
-        }
-        .navbar-wrapper ~ div [data-testid="column"]:first-child {
-            flex-shrink: 0 !important;
-        }
-        .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
-        div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
-            height: auto !important;
-            min-height: 36px !important;
-            max-height: none !important;
-            padding: 0 0.75rem !important;
-            flex-shrink: 0 !important;
-            flex-basis: auto !important;
-            margin: 0 0.5rem !important;
-        }
-        .navbar-wrapper ~ div .stButton,
-        div:has(.navbar-wrapper) ~ div .stButton {
-            height: auto !important;
-            min-height: 36px !important;
-            max-height: none !important;
-        }
-        button[key^="nav_"] {
-            font-size: 0.95rem !important;
-            padding: 0.6rem 1.5rem !important;
-            height: auto !important;
-            min-height: 36px !important;
-            max-height: none !important;
-            white-space: nowrap !important;
-            flex-shrink: 0 !important;
-            min-width: max-content !important;
-        }
+        
+        /* Ensure Model Performance button has enough space on laptop */
         button[key="nav_Model Performance"] {
             font-size: 0.9rem !important;
-            padding: 0.6rem 1.4rem !important;
+            padding: 0.5rem 1.1rem !important;
+            white-space: nowrap !important;
         }
+        
+        /* Ensure Price Prediction button has enough space on laptop */
         button[key="nav_Price Prediction"] {
             font-size: 0.9rem !important;
-            padding: 0.6rem 1.4rem !important;
-        }
-        button[key="nav_Data Analysis"] {
-            font-size: 0.9rem !important;
-            padding: 0.6rem 1.4rem !important;
-        }
-    }
-    
-    /* Responsive Design - Mobile (still horizontal, no wrapping) */
-    @media (max-width: 768px) {
-        .navbar-wrapper ~ div:has([data-testid="column"]),
-        div:has(.navbar-wrapper) ~ div:has([data-testid="column"]) {
-            padding: 0.45rem 1rem !important;
-            height: auto !important;
-            min-height: 40px !important;
-            max-height: none !important;
-            gap: 0.65rem !important;
-            flex-wrap: nowrap !important;
-            overflow-x: auto !important;
-            overflow-y: hidden !important;
-            -webkit-overflow-scrolling: touch !important;
-        }
-        .navbar-brand {
-            font-size: 1.05rem !important;
-            flex-shrink: 0 !important;
-        }
-        .navbar-wrapper ~ div [data-testid="column"]:first-child {
-            flex-shrink: 0 !important;
-            min-width: fit-content !important;
-        }
-        .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
-        div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
-            height: auto !important;
-            min-height: 28px !important;
-            max-height: none !important;
-            padding: 0 0.15rem !important;
-            flex-shrink: 0 !important;
-            flex-basis: auto !important;
-        }
-        .navbar-wrapper ~ div .stButton,
-        div:has(.navbar-wrapper) ~ div .stButton {
-            height: auto !important;
-            min-height: 28px !important;
-            max-height: none !important;
-            width: max-content !important;
-        }
-        button[key^="nav_"] {
-            font-size: 0.65rem !important;
-            padding: 0.35rem 0.7rem !important;
-            height: auto !important;
-            min-height: 28px !important;
-            max-height: none !important;
+            padding: 0.5rem 1.1rem !important;
             white-space: nowrap !important;
-            flex-shrink: 0 !important;
-            min-width: max-content !important;
-        }
-        button[key="nav_Model Performance"] {
-            font-size: 0.63rem !important;
-            padding: 0.35rem 0.65rem !important;
-        }
-        button[key="nav_Data Analysis"] {
-            font-size: 0.63rem !important;
-            padding: 0.35rem 0.65rem !important;
-        }
-        button[key="nav_Price Prediction"] {
-            font-size: 0.63rem !important;
-            padding: 0.35rem 0.65rem !important;
-        }
-    }
-    
-    /* Small Mobile (maintains horizontal scroll, no wrapping) */
-    @media (max-width: 480px) {
-        .navbar-wrapper ~ div:has([data-testid="column"]),
-        div:has(.navbar-wrapper) ~ div:has([data-testid="column"]) {
-            padding: 0.4rem 0.75rem !important;
-            height: auto !important;
-            min-height: 38px !important;
-            max-height: none !important;
-            gap: 0.5rem !important;
-            overflow-x: auto !important;
-            -webkit-overflow-scrolling: touch !important;
-        }
-        .navbar-brand {
-            font-size: 1rem !important;
-            flex-shrink: 0 !important;
-        }
-        .navbar-wrapper ~ div [data-testid="column"]:first-child {
-            flex-shrink: 0 !important;
-            min-width: fit-content !important;
-        }
-        .navbar-wrapper ~ div [data-testid="column"]:not(:first-child),
-        div:has(.navbar-wrapper) ~ div [data-testid="column"]:not(:first-child) {
-            height: auto !important;
-            min-height: 26px !important;
-            max-height: none !important;
-            padding: 0 0.1rem !important;
-            flex-shrink: 0 !important;
-            flex-basis: auto !important;
-        }
-        .navbar-wrapper ~ div .stButton,
-        div:has(.navbar-wrapper) ~ div .stButton {
-            height: auto !important;
-            min-height: 26px !important;
-            max-height: none !important;
-            width: max-content !important;
-        }
-        button[key^="nav_"] {
-            font-size: 0.6rem !important;
-            padding: 0.3rem 0.6rem !important;
-            height: auto !important;
-            min-height: 26px !important;
-            max-height: none !important;
-            white-space: nowrap !important;
-            flex-shrink: 0 !important;
-            min-width: max-content !important;
-        }
-        button[key="nav_Model Performance"] {
-            font-size: 0.58rem !important;
-            padding: 0.3rem 0.55rem !important;
-        }
-        button[key="nav_Data Analysis"] {
-            font-size: 0.58rem !important;
-            padding: 0.3rem 0.55rem !important;
-        }
-        button[key="nav_Price Prediction"] {
-            font-size: 0.58rem !important;
-            padding: 0.3rem 0.55rem !important;
         }
     }
     </style>
 """, unsafe_allow_html=True)
 
-# JavaScript to highlight active navigation item and force single-line buttons
-st.markdown("""
+# JavaScript to handle active state and force single-line buttons
+st.markdown(f"""
     <script>
     (function() {{
-        function forceSingleLineButtons() {{
+        function updateNavButtons() {{
+            const currentPage = '{current_page}';
             const navButtons = document.querySelectorAll('button[key^="nav_"]');
-            const isMobile = window.innerWidth <= 768;
-            const isTablet = window.innerWidth <= 1024 && window.innerWidth > 768;
-            const isLaptop = window.innerWidth > 1024 && window.innerWidth <= 1440;
-            const isDesktop = window.innerWidth > 1440;
             
             navButtons.forEach(btn => {{
-                // Force single line and full width display
-                btn.style.setProperty('white-space', 'nowrap', 'important');
-                btn.style.setProperty('width', 'auto', 'important');
-                btn.style.setProperty('min-width', 'max-content', 'important');
-                btn.style.setProperty('max-width', 'none', 'important');
-                btn.style.setProperty('flex-shrink', '0', 'important');
-                btn.style.setProperty('overflow', 'visible', 'important');
-                btn.style.setProperty('text-overflow', 'clip', 'important');
+                const buttonText = btn.textContent.trim();
+                btn.classList.remove('nav-active');
                 
-                // Responsive font sizing
-                if (isMobile) {{
-                    btn.style.setProperty('font-size', '0.5rem', 'important');
-                    btn.style.setProperty('padding', '0.25rem 0.5rem', 'important');
-                }} else if (isTablet) {{
-                    btn.style.setProperty('font-size', '0.53rem', 'important');
-                    btn.style.setProperty('padding', '0.25rem 0.55rem', 'important');
-                }} else if (isLaptop) {{
-                    btn.style.setProperty('font-size', '0.85rem', 'important');
-                    btn.style.setProperty('padding', '0.5rem 1.2rem', 'important');
-                }} else if (isDesktop) {{
-                    btn.style.setProperty('font-size', '0.95rem', 'important');
-                    btn.style.setProperty('padding', '0.6rem 1.5rem', 'important');
-                }}
+                // Force single line - AGGRESSIVE
+                btn.style.whiteSpace = 'nowrap';
+                btn.style.wordBreak = 'keep-all';
+                btn.style.overflowWrap = 'normal';
+                btn.style.width = 'auto';
+                btn.style.minWidth = 'max-content';
+                btn.style.maxWidth = 'none';
+                btn.style.display = 'inline-block';
+                btn.style.lineHeight = '1.2';
                 
-                // Force ALL parent containers to not constrain - AGGRESSIVE
-                let parent = btn.parentElement;
-                let depth = 0;
-                while (parent && depth < 10) {{
-                    parent.style.setProperty('width', 'auto', 'important');
-                    parent.style.setProperty('min-width', 'max-content', 'important');
-                    parent.style.setProperty('max-width', 'none', 'important');
-                    parent.style.setProperty('overflow', 'visible', 'important');
-                    if (parent.classList && parent.classList.contains('stButton')) {{
-                        parent.style.setProperty('flex-shrink', '0', 'important');
-                        parent.style.setProperty('width', 'max-content', 'important');
-                    }}
-                    parent = parent.parentElement;
-                    depth++;
-                }}
+                // Force all child elements to single line
+                const children = btn.querySelectorAll('*');
+                children.forEach(child => {{
+                    child.style.whiteSpace = 'nowrap';
+                    child.style.wordBreak = 'keep-all';
+                    child.style.overflowWrap = 'normal';
+                    child.style.display = 'inline';
+                }});
                 
-                // Force column to maintain button width - VERY AGGRESSIVE
+                // Special handling for Model Performance and Price Prediction
+                if (buttonText === 'Model Performance' || buttonText === 'Price Prediction') {{
+                    btn.style.fontSize = '0.9rem';
+                    btn.style.padding = '0.5rem 1.1rem';
+                    btn.style.width = 'auto';
+                    btn.style.minWidth = 'max-content';
+                    
+                    // Force parent column to not constrain
                 const column = btn.closest('[data-testid="column"]');
                 if (column) {{
-                    column.style.setProperty('width', 'auto', 'important');
-                    column.style.setProperty('min-width', 'max-content', 'important');
-                    column.style.setProperty('max-width', 'max-content', 'important');
-                    column.style.setProperty('flex-basis', 'auto', 'important');
-                    column.style.setProperty('flex-grow', '0', 'important');
-                    column.style.setProperty('flex-shrink', '0', 'important');
-                    column.style.setProperty('overflow', 'visible', 'important');
-                    
-                    // Remove any inline width styles that Streamlit might add
-                    const currentStyle = column.getAttribute('style') || '';
-                    if (currentStyle.includes('width')) {{
-                        column.style.cssText = column.style.cssText.replace(/width[^;]*;?/gi, '');
-                        column.style.setProperty('width', 'auto', 'important');
+                        column.style.width = 'auto';
+                        column.style.minWidth = 'max-content';
+                        column.style.maxWidth = 'none';
+                        column.style.flexBasis = 'auto';
+                        column.style.flexGrow = '0';
+                        column.style.flexShrink = '0';
                     }}
                 }}
                 
-                // Calculate and set explicit width based on text content
-                setTimeout(() => {{
-                    const textWidth = btn.scrollWidth;
-                    if (textWidth > 0 && textWidth > btn.offsetWidth) {{
-                        btn.style.setProperty('width', (textWidth + 10) + 'px', 'important');
-                    }}
-                }}, 10);
-            }});
-        }}
-        
-        function updateActiveNav() {{
-            const currentPage = '""" + st.session_state.page + """';
-            const navButtons = document.querySelectorAll('button[key^="nav_"]');
-            navButtons.forEach(btn => {{
-                const buttonText = btn.textContent.trim();
                 if (buttonText === currentPage) {{
-                    btn.style.setProperty('background', 'rgba(26, 188, 156, 0.25)', 'important');
-                    btn.style.setProperty('color', '#ffffff', 'important');
-                    btn.setAttribute('aria-current', 'page');
-                }} else {{
-                    btn.style.setProperty('background', 'transparent', 'important');
-                    btn.style.setProperty('color', 'rgba(255, 255, 255, 0.85)', 'important');
-                    btn.removeAttribute('aria-current');
+                    btn.classList.add('nav-active');
                 }}
             }});
-        }}
-        
-        function initNav() {{
-            forceSingleLineButtons();
-            updateActiveNav();
         }}
         
         // Run on load
         if (document.readyState === 'loading') {{
-            document.addEventListener('DOMContentLoaded', initNav);
+            document.addEventListener('DOMContentLoaded', updateNavButtons);
         }} else {{
-            initNav();
+            updateNavButtons();
         }}
         
         // Update after Streamlit reruns
         const observer = new MutationObserver(function(mutations) {{
-            forceSingleLineButtons();
-            updateActiveNav();
+            updateNavButtons();
         }});
         
         observer.observe(document.body, {{
             childList: true,
             subtree: true
         }});
-        
-        // Also force on window resize with debounce
-        let resizeTimeout;
-        window.addEventListener('resize', function() {{
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(function() {{
-                forceSingleLineButtons();
-                updateActiveNav();
-            }}, 100);
-        });
     }})();
     </script>
 """, unsafe_allow_html=True)
-
-# Add CSS to remove gap after navigation
-st.markdown("""
-    <style>
-    /* Force remove gap after navigation */
-    div:has(button[key^="nav_"]) {
-        margin-bottom: 0 !important;
-        padding-bottom: 0 !important;
-    }
-    .block-container {
-        padding-top: 0 !important;
-    }
-    
-    </style>
-""", unsafe_allow_html=True)
-
-# Use session state page
-current_page = st.session_state.page
 
 # ============================================================================
 # HOME PAGE
