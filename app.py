@@ -384,9 +384,13 @@ st.markdown("""
         border-radius: 50px;
         font-weight: 600;
         font-size: 0.875rem;
-        margin: 0.5rem 0.5rem 0.5rem 0;
+        margin: 0 0.5rem 0 0;
+        margin-top: 0 !important;
+        margin-bottom: 0 !important;
         box-shadow: 0 2px 10px rgba(241, 196, 15, 0.3);
         transition: all 0.3s ease;
+        vertical-align: middle;
+        white-space: nowrap;
     }
     
     .premium-badge:hover {
@@ -1657,12 +1661,13 @@ elif current_page == "Price Prediction":
                     feature_list.append(f"{parking} Parking Space(s)")
                 feature_list.append(furnishingstatus.title())
                 
-                st.markdown("""
-                    <div style='display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0;'>
+                # Create all badges in a single markdown call for horizontal display
+                badges_html = ''.join([f'<span class="premium-badge">{feature}</span>' for feature in feature_list])
+                st.markdown(f"""
+                    <div style='display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 1.5rem 0; align-items: center;'>
+                        {badges_html}
+                    </div>
                 """, unsafe_allow_html=True)
-                for feature in feature_list:
-                    st.markdown(f'<span class="premium-badge">{feature}</span>', unsafe_allow_html=True)
-                st.markdown("</div>", unsafe_allow_html=True)
                 
                 # Comparison with average
                 avg_price = df['price'].mean()
