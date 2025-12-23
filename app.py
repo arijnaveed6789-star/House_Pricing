@@ -354,7 +354,8 @@ st.markdown("""
         box-shadow: none;
     }
     
-    .stButton>button {
+    /* General button styling - exclude navbar buttons */
+    .stButton>button:not([key^="nav_"]) {
         background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%) !important;
         color: white !important;
         font-weight: 700 !important;
@@ -368,7 +369,7 @@ st.markdown("""
         letter-spacing: 0.5px !important;
     }
     
-    .stButton>button:hover {
+    .stButton>button:not([key^="nav_"]):hover {
         background: linear-gradient(135deg, #16a085 0%, #1abc9c 100%) !important;
         transform: translateY(0) !important;
         box-shadow: none !important;
@@ -513,107 +514,74 @@ current_page = st.session_state.page
 # NAVIGATION BAR
 # ============================================================================
 
-# Navigation Bar CSS
+# Navigation Bar CSS - Clean design for laptop screens
 st.markdown("""
     <style>
-    /* Navigation Bar Container */
-    .navbar-wrapper {
-        background: linear-gradient(135deg, #1a1f2e 0%, #2c3542 50%, #1a1f2e 100%);
-        padding: 0 2rem 0.75rem 2rem;
-        padding-top: 0 !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        margin-bottom: 0;
-        margin-top: 0 !important;
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 3rem;
-        position: relative;
-        top: 0;
-    }
-    
-    /* Logo Styling - Brand Logo */
+    /* Logo Styling */
     .navbar-logo {
-        font-size: 1.4rem;
-        font-weight: 800;
+        font-size: 1.3rem;
+        font-weight: 700;
         color: #000000;
         letter-spacing: 0.5px;
         white-space: nowrap;
         font-family: 'Inter', 'Poppins', sans-serif;
         margin: 0;
         padding: 0;
-        flex-shrink: 0;
         display: flex;
         align-items: center;
-        gap: 0.6rem;
-        text-transform: uppercase;
+        gap: 0.5rem;
         cursor: pointer;
-        transition: all 0.3s ease;
     }
     
-    .navbar-logo:hover {
-        transform: scale(1.05);
-        color: #1a1a1a;
-    }
-    
-    /* Logo Icon */
     .navbar-logo-icon {
-        font-size: 1.8rem;
-        display: inline-block;
-        vertical-align: middle;
-        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
-        transition: transform 0.3s ease;
+        font-size: 1.6rem;
     }
     
-    .navbar-logo:hover .navbar-logo-icon {
-        transform: scale(1.1) rotate(5deg);
-    }
-    
-    /* Logo Text */
     .navbar-logo-text {
         color: #000000;
-        font-weight: 800;
-        letter-spacing: 1px;
+        font-weight: 700;
     }
     
-    /* Navigation Buttons Container */
-    .nav-buttons-wrapper {
-        display: flex;
-        align-items: center;
-        gap: 2rem;
-        flex-wrap: nowrap;
-    }
-    
-    /* Navigation Button Styling */
+    /* Remove ALL button styling - clean default buttons */
     button[key^="nav_"] {
         background: transparent !important;
-        color: rgba(255, 255, 255, 0.85) !important;
+        color: #2c3e50 !important;
         font-weight: 500 !important;
-        font-size: 0.75rem !important;
-        padding: 0.35rem 0.9rem !important;
-        border-radius: 6px !important;
-        border: none !important;
-        box-shadow: none !important;
-        transition: all 0.3s ease !important;
+        font-size: 0.9rem !important;
+        padding: 0.5rem 1rem !important;
+        border: 1px solid #e0e0e0 !important;
+        border-radius: 4px !important;
         cursor: pointer !important;
         white-space: nowrap !important;
-        font-family: 'Inter', 'Roboto', sans-serif !important;
+        font-family: 'Inter', sans-serif !important;
         margin: 0 !important;
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        text-overflow: clip !important;
+        transition: all 0.2s ease !important;
         overflow: visible !important;
+        text-overflow: clip !important;
         word-break: keep-all !important;
         overflow-wrap: normal !important;
+        hyphens: none !important;
+        word-spacing: normal !important;
         line-height: 1.2 !important;
         display: inline-block !important;
-        text-align: center !important;
     }
     
-    /* AGGRESSIVE: Force all button text to single line */
+    button[key^="nav_"]:hover {
+        background: #f5f5f5 !important;
+        border-color: #1abc9c !important;
+        color: #1abc9c !important;
+    }
+    
+    button[key^="nav_"].nav-active {
+        background: #1abc9c !important;
+        color: white !important;
+        border-color: #1abc9c !important;
+    }
+    
+    /* AGGRESSIVE: Force all button text to single line - NO WRAPPING */
     button[key^="nav_"],
     button[key^="nav_"] *,
     button[key^="nav_"] span,
@@ -624,278 +592,191 @@ st.markdown("""
         white-space: nowrap !important;
         word-break: keep-all !important;
         overflow-wrap: normal !important;
-        word-spacing: normal !important;
         text-wrap: nowrap !important;
+        hyphens: none !important;
+        word-spacing: normal !important;
         display: inline !important;
         line-height: 1.2 !important;
     }
     
-    button[key^="nav_"]:hover {
-        background: rgba(255, 255, 255, 0.1) !important;
-        color: #ffffff !important;
-        transform: translateY(-1px) !important;
-    }
-    
-    button[key^="nav_"]:active,
-    button[key^="nav_"]:focus {
-        background: rgba(255, 255, 255, 0.15) !important;
-        color: #ffffff !important;
-        outline: none !important;
-    }
-    
-    /* Active Page Button */
-    button[key^="nav_"].nav-active {
-        background: rgba(255, 255, 255, 0.2) !important;
-        color: #ffffff !important;
-    }
-    
-    /* Streamlit button wrapper styling */
-    .nav-buttons-wrapper .stButton {
+    /* Streamlit button wrapper - ensure no width constraints */
+    div:has(button[key^="nav_"]) .stButton {
         margin: 0 !important;
         padding: 0 !important;
         width: auto !important;
-        flex-shrink: 0;
+        min-width: max-content !important;
+        max-width: none !important;
+        flex-shrink: 0 !important;
     }
     
-    /* Ensure buttons don't wrap - CRITICAL */
-    .nav-buttons-wrapper .stButton button,
+    /* Navbar columns - ensure single line on laptop */
+    div:has(.navbar-logo) ~ div:has([data-testid="column"]) {
+        display: flex !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        gap: 0.3rem !important;
+        margin-top: 0 !important;
+        padding-top: 0.75rem !important;
+        padding-bottom: 0.75rem !important;
+        padding-left: 1.5rem !important;
+        padding-right: 1.5rem !important;
+        background: #ffffff !important;
+        border-bottom: 1px solid #e0e0e0 !important;
+    }
+    
+    /* Column constraints for buttons - allow content-based width */
+    div:has(button[key^="nav_"]) [data-testid="column"] {
+        flex-shrink: 0 !important;
+        flex-grow: 0 !important;
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        flex-basis: auto !important;
+    }
+    
+    /* Remove all width constraints from button column containers */
+    div:has(button[key^="nav_"]) [data-testid="column"] > div,
+    div:has(button[key^="nav_"]) [data-testid="column"] > div > div {
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        overflow: visible !important;
+    }
+    
+    /* Override Streamlit's default column width constraints */
+    div:has(button[key^="nav_"]) [data-testid="column"][style*="width"] {
+        width: auto !important;
+        min-width: max-content !important;
+    }
+    
+    /* Ensure button text nodes don't wrap */
     button[key^="nav_"] {
+        text-overflow: clip !important;
+    }
+    
+    /* Specific styling for Conclusion button to ensure single line - VERY AGGRESSIVE */
+    button[key="nav_Conclusion"] {
         white-space: nowrap !important;
         word-break: keep-all !important;
         overflow-wrap: normal !important;
-        display: inline-block !important;
         text-wrap: nowrap !important;
+        min-width: max-content !important;
+        width: auto !important;
+        max-width: none !important;
+        display: inline-block !important;
+        line-height: 1.2 !important;
         hyphens: none !important;
+        word-spacing: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
     }
     
-    /* Force single line for all button text - AGGRESSIVE */
-    button[key^="nav_"] *,
-    button[key^="nav_"] span,
-    button[key^="nav_"] div,
-    button[key^="nav_"] p,
-    button[key^="nav_"] strong,
-    button[key^="nav_"] em {
+    button[key="nav_Conclusion"] *,
+    button[key="nav_Conclusion"] span,
+    button[key="nav_Conclusion"] div,
+    button[key="nav_Conclusion"] p {
         white-space: nowrap !important;
         word-break: keep-all !important;
         overflow-wrap: normal !important;
         text-wrap: nowrap !important;
         display: inline !important;
-        word-spacing: normal !important;
         hyphens: none !important;
+        word-spacing: normal !important;
     }
     
-    /* Laptop Screen Spacing (1024px - 1440px) - PRIMARY STYLING */
+    /* Ensure Conclusion button column has enough width */
+    div:has(button[key="nav_Conclusion"]) [data-testid="column"] {
+        min-width: max-content !important;
+        width: auto !important;
+        max-width: none !important;
+        flex-shrink: 0 !important;
+        flex-grow: 0 !important;
+        flex-basis: auto !important;
+    }
+    
+    /* Conclusion button wrapper */
+    div:has(button[key="nav_Conclusion"]) .stButton {
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        flex-shrink: 0 !important;
+    }
+    
+    /* Logo column */
+    div:has(.navbar-logo) [data-testid="column"] {
+        flex-shrink: 0 !important;
+    }
+    
+    /* Force navbar to top */
+    div:has(.navbar-logo),
+    div:has(.navbar-logo) ~ div:has([data-testid="column"]) {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    .block-container > div:first-child:has(.navbar-logo),
+    .block-container > div:first-child:has(button[key^="nav_"]) {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    /* Laptop screen optimization (1024px - 1440px) */
     @media (min-width: 1024px) and (max-width: 1440px) {
-        .navbar-wrapper {
-            padding: 0 1.5rem 0.7rem 1.5rem;
-            gap: 1.5rem;
-        }
         .navbar-logo {
             font-size: 1.2rem;
         }
         .navbar-logo-icon {
             font-size: 1.5rem;
         }
-        .navbar-logo-text {
-            letter-spacing: 0.6px;
-        }
-        .nav-buttons-wrapper {
-            gap: 1rem;
-        }
         button[key^="nav_"] {
-            font-size: 0.65rem !important;
-            padding: 0.3rem 0.65rem !important;
+            font-size: 0.8rem !important;
+            padding: 0.4rem 0.8rem !important;
             white-space: nowrap !important;
             word-break: keep-all !important;
+            overflow-wrap: normal !important;
+            min-width: max-content !important;
+            width: auto !important;
         }
-        /* Smaller font for longer button names on laptop */
-        button[key="nav_Model Performance"],
-        button[key="nav_Price Prediction"],
-        button[key="nav_Data Analysis"],
-        button[key="nav_Conclusion"] {
-            font-size: 0.6rem !important;
-            padding: 0.3rem 0.6rem !important;
-        }
-    }
-    
-    /* Desktop/Large Laptop (1440px+) */
-    @media (min-width: 1440px) {
-        .navbar-wrapper {
-            padding: 0 2.5rem 0.8rem 2.5rem;
-            gap: 3rem;
-        }
-        .navbar-logo {
-            font-size: 1.5rem;
-    }
-        .navbar-logo-icon {
-            font-size: 1.9rem;
-        }
-        .navbar-logo-text {
-            letter-spacing: 1.2px;
-        }
-        .nav-buttons-wrapper {
-            gap: 2.5rem;
-        }
-    button[key^="nav_"] {
-            font-size: 0.8rem !important;
-            padding: 0.4rem 1rem !important;
-        }
-    }
-    
-    /* Tablet (768px - 1024px) */
-    @media (max-width: 1023px) and (min-width: 768px) {
-        .navbar-wrapper {
-            padding: 0 1.5rem 0.6rem 1.5rem;
-            gap: 2rem;
-        }
-        .navbar-logo {
-            font-size: 1.2rem;
-    }
-        .navbar-logo-icon {
-            font-size: 1.5rem;
-    }
-        .navbar-logo-text {
-            letter-spacing: 0.6px;
-        }
-        .nav-buttons-wrapper {
-            gap: 1.5rem;
-    }
-    button[key^="nav_"] {
-        font-size: 0.7rem !important;
-            padding: 0.35rem 0.85rem !important;
-        }
-    }
-    
-    /* Mobile */
-    @media (max-width: 767px) {
-        .navbar-wrapper {
-            flex-direction: column;
-            gap: 0.75rem;
-            padding: 0 1rem 0.75rem 1rem;
-        }
-        .navbar-logo {
-            font-size: 1.1rem;
-        }
-        .navbar-logo-icon {
-            font-size: 1.4rem;
-    }
-        .navbar-logo-text {
-            letter-spacing: 0.5px;
-    }
-        .nav-buttons-wrapper {
-            gap: 0.75rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        button[key^="nav_"] {
-            font-size: 0.65rem !important;
-            padding: 0.3rem 0.7rem !important;
-        }
-    }
-    
-    /* Override Streamlit column spacing */
-    div:has(.navbar-logo) ~ div:has([data-testid="column"]) {
-        background: linear-gradient(135deg, #1a1f2e 0%, #2c3542 50%, #1a1f2e 100%) !important;
-        padding: 0 2rem 0.75rem 2rem !important;
-        padding-top: 0 !important;
-        margin: 0 !important;
-        margin-top: 0 !important;
-        margin-bottom: 0 !important;
-        display: flex !important;
-        align-items: center !important;
-        gap: 2rem !important;
-    }
-    
-    /* Laptop screen - reduce gap between navbar columns */
-    @media (min-width: 1024px) and (max-width: 1440px) {
         div:has(.navbar-logo) ~ div:has([data-testid="column"]) {
-            gap: 1rem !important;
-            padding: 0 1.5rem 0.7rem 1.5rem !important;
+            gap: 0.25rem !important;
+            padding-left: 1.25rem !important;
+            padding-right: 1.25rem !important;
         }
-    }
-    
-    /* Force navbar to top of page - Remove all top spacing */
-    div:has(.navbar-logo),
-    div:has(.navbar-logo) ~ div:has([data-testid="column"]),
-    div:has(button[key^="nav_"]) {
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-    }
-    
-    /* Remove spacing from first element if it's navbar */
-    .block-container > div:first-child:has(.navbar-logo),
-    .block-container > div:first-child:has(button[key^="nav_"]),
-    .block-container > div:first-child [data-testid="column"]:has(.navbar-logo) {
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-    }
-    
-    /* Ensure navbar container starts at top */
-    div:has(.navbar-logo) {
-        margin-top: 0 !important;
-        padding-top: 0 !important;
-    }
-    
-    /* Ensure columns don't wrap */
-    div:has(.navbar-logo) ~ div:has([data-testid="column"]) [data-testid="column"] {
-        flex-shrink: 0 !important;
-        flex-grow: 0 !important;
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-    }
-    
-    /* Specific fix for Model Performance button - prevent wrapping */
-    button[key="nav_Model Performance"] {
-        white-space: nowrap !important;
-        word-break: keep-all !important;
-        overflow-wrap: normal !important;
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-        display: inline-block !important;
-        line-height: 1.2 !important;
-    }
-    
-    /* Specific fix for Price Prediction button - prevent wrapping */
-    button[key="nav_Price Prediction"] {
-        white-space: nowrap !important;
-        word-break: keep-all !important;
-        overflow-wrap: normal !important;
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-        display: inline-block !important;
-        line-height: 1.2 !important;
-    }
-    
-    /* Force column for Model Performance to be wider */
-    div:has(button[key="nav_Model Performance"]) [data-testid="column"] {
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-        flex-basis: auto !important;
-        flex-grow: 0 !important;
-        flex-shrink: 0 !important;
-    }
-    
-    /* Force column for Price Prediction to be wider */
-    div:has(button[key="nav_Price Prediction"]) [data-testid="column"] {
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-        flex-basis: auto !important;
-        flex-grow: 0 !important;
-        flex-shrink: 0 !important;
+        /* Ensure button columns have enough width */
+        div:has(button[key^="nav_"]) [data-testid="column"] {
+            min-width: max-content !important;
+            width: auto !important;
+            flex-shrink: 0 !important;
+        }
+        /* Specific styling for Conclusion button to ensure single line on laptop */
+        button[key="nav_Conclusion"] {
+            font-size: 0.75rem !important;
+            padding: 0.4rem 0.7rem !important;
+            white-space: nowrap !important;
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
+            text-wrap: nowrap !important;
+            min-width: max-content !important;
+            width: auto !important;
+            max-width: none !important;
+        }
+        
+        /* Ensure Conclusion button column has enough width on laptop */
+        div:has(button[key="nav_Conclusion"]) [data-testid="column"] {
+            min-width: max-content !important;
+            width: auto !important;
+            flex-shrink: 0 !important;
+        }
     }
     </style>
 """, unsafe_allow_html=True)
 
-# Create navigation bar
-nav_pages = ["Home", "Data Analysis", "Model Performance", "Price Prediction", "Conclusion"]
+# Create navigation bar - shortened names for single-line display
+nav_pages = ["Home", "Analysis", "Performance", "Prediction", "Conclusion"]
+nav_pages_full = ["Home", "Data Analysis", "Model Performance", "Price Prediction", "Conclusion"]
 
 # Create navbar with logo and buttons in same row - wider columns for longer button names
-navbar_cols = st.columns([1.5, 1, 1.4, 1.4, 1.2, 1], gap="medium")
+navbar_cols = st.columns([2, 1.2, 1.3, 1.3, 1.2, 1.3], gap="small")
 
 # Logo column
 with navbar_cols[0]:
@@ -907,176 +788,11 @@ with navbar_cols[0]:
     """, unsafe_allow_html=True)
 
 # Navigation buttons in remaining columns
-for idx, page_name in enumerate(nav_pages):
+for idx, (short_name, full_name) in enumerate(zip(nav_pages, nav_pages_full)):
     with navbar_cols[idx + 1]:
-        if st.button(page_name, key=f"nav_{page_name}", use_container_width=False):
-            st.session_state.page = page_name
+        if st.button(short_name, key=f"nav_{full_name}", use_container_width=False):
+            st.session_state.page = full_name
             st.rerun()
-
-# Additional CSS to ensure proper layout and prevent text wrapping
-st.markdown("""
-    <style>
-    /* Force navbar row to stay horizontal */
-    div:has(.navbar-logo) ~ div:has([data-testid="column"]) {
-        flex-wrap: nowrap !important;
-        overflow-x: visible !important;
-    }
-    
-    /* Prevent button text wrapping - AGGRESSIVE */
-    div:has(button[key^="nav_"]) button[key^="nav_"],
-    button[key^="nav_"] {
-        white-space: nowrap !important;
-        word-break: keep-all !important;
-        overflow-wrap: normal !important;
-        text-overflow: clip !important;
-        display: inline-block !important;
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-        text-wrap: nowrap !important;
-        hyphens: none !important;
-        word-spacing: normal !important;
-        line-height: 1.2 !important;
-    }
-    
-    /* Force all button content to single line - VERY AGGRESSIVE */
-    button[key^="nav_"] *,
-    button[key^="nav_"] span,
-    button[key^="nav_"] div,
-    button[key^="nav_"] p,
-    button[key^="nav_"] strong,
-    button[key^="nav_"] em,
-    button[key^="nav_"] b,
-    button[key^="nav_"] i {
-        white-space: nowrap !important;
-        word-break: keep-all !important;
-        overflow-wrap: normal !important;
-        display: inline !important;
-        text-wrap: nowrap !important;
-        hyphens: none !important;
-        word-spacing: normal !important;
-        line-height: 1.2 !important;
-    }
-    
-    /* Prevent any text node from wrapping */
-    button[key^="nav_"]::before,
-    button[key^="nav_"]::after {
-        white-space: nowrap !important;
-        word-break: keep-all !important;
-    }
-    
-    /* Button wrapper - prevent width constraints */
-    div:has(button[key^="nav_"]) .stButton {
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-        flex-shrink: 0 !important;
-    }
-    
-    /* Column constraints - allow content-based width - AGGRESSIVE */
-    div:has(button[key^="nav_"]) [data-testid="column"],
-    div:has(button[key^="nav_"]) [data-testid="column"] > div,
-    div:has(button[key^="nav_"]) [data-testid="column"] > div > div {
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-        flex-basis: auto !important;
-        flex-grow: 0 !important;
-        flex-shrink: 0 !important;
-        overflow: visible !important;
-    }
-    
-    /* Remove all width constraints from button columns */
-    div:has(button[key^="nav_"]) [data-testid="column"][style*="width"] {
-        width: auto !important;
-        min-width: max-content !important;
-    }
-    
-    /* Additional column width removal - ensure no constraints */
-    div:has(button[key^="nav_"]) [data-testid="column"] [style*="width"] {
-        width: auto !important;
-        min-width: max-content !important;
-    }
-    
-    /* FINAL: Force all button text to single line - NO EXCEPTIONS */
-    button[key^="nav_"],
-    button[key^="nav_"] *,
-    button[key^="nav_"]::before,
-    button[key^="nav_"]::after {
-        white-space: nowrap !important;
-        word-break: keep-all !important;
-        overflow-wrap: normal !important;
-        text-wrap: nowrap !important;
-        hyphens: none !important;
-        word-spacing: normal !important;
-        display: inline !important;
-        line-height: 1.2 !important;
-    }
-    
-    /* Force Model Performance button to stay on one line */
-    button[key="nav_Model Performance"],
-    button[key="nav_Model Performance"] * {
-        white-space: nowrap !important;
-        word-break: keep-all !important;
-        overflow-wrap: normal !important;
-        display: inline-block !important;
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-        }
-    
-    /* Force Price Prediction button to stay on one line */
-    button[key="nav_Price Prediction"],
-    button[key="nav_Price Prediction"] * {
-            white-space: nowrap !important;
-        word-break: keep-all !important;
-        overflow-wrap: normal !important;
-        display: inline-block !important;
-        width: auto !important;
-            min-width: max-content !important;
-        max-width: none !important;
-    }
-    
-    /* Laptop-specific spacing adjustments */
-    @media (min-width: 1024px) and (max-width: 1440px) {
-        div:has(.navbar-logo) ~ div:has([data-testid="column"]) {
-            gap: 1rem !important;
-        }
-        div:has(button[key^="nav_"]) [data-testid="column"] {
-            margin-right: 0 !important;
-            padding: 0 0.3rem !important;
-        }
-        
-        /* Ensure Model Performance button has enough space on laptop */
-        button[key="nav_Model Performance"] {
-            font-size: 0.6rem !important;
-            padding: 0.3rem 0.6rem !important;
-            white-space: nowrap !important;
-        }
-        
-        /* Ensure Price Prediction button has enough space on laptop */
-        button[key="nav_Price Prediction"] {
-            font-size: 0.6rem !important;
-            padding: 0.3rem 0.6rem !important;
-            white-space: nowrap !important;
-        }
-        
-        /* Ensure Data Analysis button fits on laptop */
-        button[key="nav_Data Analysis"] {
-            font-size: 0.6rem !important;
-            padding: 0.3rem 0.6rem !important;
-            white-space: nowrap !important;
-        }
-        
-        /* Ensure Conclusion button fits on laptop */
-        button[key="nav_Conclusion"] {
-            font-size: 0.6rem !important;
-            padding: 0.3rem 0.6rem !important;
-            white-space: nowrap !important;
-        }
-    }
-    </style>
-""", unsafe_allow_html=True)
 
 # JavaScript to handle active state and force single-line buttons
 st.markdown(f"""
@@ -1087,10 +803,9 @@ st.markdown(f"""
             const navButtons = document.querySelectorAll('button[key^="nav_"]');
             
             navButtons.forEach(btn => {{
-                const buttonText = btn.textContent.trim();
                 btn.classList.remove('nav-active');
                 
-                // Force single line - VERY AGGRESSIVE
+                // FORCE SINGLE LINE - AGGRESSIVE
                 btn.style.whiteSpace = 'nowrap';
                 btn.style.wordBreak = 'keep-all';
                 btn.style.overflowWrap = 'normal';
@@ -1102,8 +817,9 @@ st.markdown(f"""
                 btn.style.textWrap = 'nowrap';
                 btn.style.hyphens = 'none';
                 btn.style.wordSpacing = 'normal';
+                btn.style.overflow = 'visible';
                 
-                // Force all child elements to single line - AGGRESSIVE
+                // Force all child elements to single line
                 const children = btn.querySelectorAll('*');
                 children.forEach(child => {{
                     child.style.whiteSpace = 'nowrap';
@@ -1113,10 +829,9 @@ st.markdown(f"""
                     child.style.textWrap = 'nowrap';
                     child.style.hyphens = 'none';
                     child.style.wordSpacing = 'normal';
-                    child.style.lineHeight = '1.2';
                 }});
                 
-                // Remove any width constraints from parent columns
+                // Remove width constraints from parent column
                 const column = btn.closest('[data-testid="column"]');
                 if (column) {{
                     column.style.width = 'auto';
@@ -1126,35 +841,36 @@ st.markdown(f"""
                     column.style.flexGrow = '0';
                     column.style.flexShrink = '0';
                     column.style.overflow = 'visible';
+                }}
+                
+                // EXTRA AGGRESSIVE handling for Conclusion button
+                const buttonKey = btn.getAttribute('key');
+                if (buttonKey === 'nav_Conclusion') {{
+                    btn.style.fontSize = window.innerWidth >= 1024 && window.innerWidth <= 1440 ? '0.75rem' : '0.9rem';
+                    btn.style.padding = window.innerWidth >= 1024 && window.innerWidth <= 1440 ? '0.4rem 0.7rem' : '0.5rem 1rem';
+                    btn.style.whiteSpace = 'nowrap';
+                    btn.style.wordBreak = 'keep-all';
+                    btn.style.overflowWrap = 'normal';
+                    btn.style.textWrap = 'nowrap';
                     
-                    // Remove width from all parent divs
-                    let parent = column.parentElement;
-                    let depth = 0;
-                    while (parent && depth < 5) {{
-                        if (parent.style) {{
-                            parent.style.width = 'auto';
-                            parent.style.minWidth = 'max-content';
-                            parent.style.maxWidth = 'none';
-                        }}
-                        parent = parent.parentElement;
-                        depth++;
+                    // Force Conclusion button column to be wider
+                    if (column) {{
+                        column.style.minWidth = 'max-content';
+                        column.style.width = 'auto';
+                        column.style.flexShrink = '0';
                     }}
                 }}
                 
-                // Special handling for longer button names on laptop screens
-                const isLaptop = window.innerWidth >= 1024 && window.innerWidth <= 1440;
-                if (isLaptop) {{
-                    if (buttonText === 'Model Performance' || buttonText === 'Price Prediction' || 
-                        buttonText === 'Data Analysis' || buttonText === 'Conclusion') {{
-                        btn.style.fontSize = '0.6rem';
-                        btn.style.padding = '0.3rem 0.6rem';
-                    }} else {{
-                        btn.style.fontSize = '0.65rem';
-                        btn.style.padding = '0.3rem 0.65rem';
-                    }}
-                }}
+                // Get the full page name from the button key
+                const buttonKey = btn.getAttribute('key');
+                let pageName = '';
+                if (buttonKey === 'nav_Home') pageName = 'Home';
+                else if (buttonKey === 'nav_Data Analysis') pageName = 'Data Analysis';
+                else if (buttonKey === 'nav_Model Performance') pageName = 'Model Performance';
+                else if (buttonKey === 'nav_Price Prediction') pageName = 'Price Prediction';
+                else if (buttonKey === 'nav_Conclusion') pageName = 'Conclusion';
                 
-                if (buttonText === currentPage) {{
+                if (pageName === currentPage) {{
                     btn.classList.add('nav-active');
                 }}
             }});
