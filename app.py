@@ -693,6 +693,40 @@ st.markdown("""
         text-overflow: clip !important;
     }
     
+    /* Specific styling for Performance button to ensure single line - VERY AGGRESSIVE */
+    button[key="nav_Model Performance"] {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
+        text-wrap: nowrap !important;
+        min-width: max-content !important;
+        width: auto !important;
+        max-width: none !important;
+        display: inline-block !important;
+        line-height: 1.2 !important;
+        hyphens: none !important;
+        word-spacing: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+    }
+    
+    /* Specific styling for Prediction button to ensure single line - VERY AGGRESSIVE */
+    button[key="nav_Price Prediction"] {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
+        text-wrap: nowrap !important;
+        min-width: max-content !important;
+        width: auto !important;
+        max-width: none !important;
+        display: inline-block !important;
+        line-height: 1.2 !important;
+        hyphens: none !important;
+        word-spacing: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+    }
+    
     /* Specific styling for Conclusion button to ensure single line - VERY AGGRESSIVE */
     button[key="nav_Conclusion"] {
         white-space: nowrap !important;
@@ -721,6 +755,42 @@ st.markdown("""
         display: inline !important;
         hyphens: none !important;
         word-spacing: normal !important;
+    }
+    
+    /* Ensure Performance button column has enough width */
+    div:has(button[key="nav_Model Performance"]) [data-testid="column"] {
+        min-width: max-content !important;
+        width: auto !important;
+        max-width: none !important;
+        flex-shrink: 0 !important;
+        flex-grow: 0 !important;
+        flex-basis: auto !important;
+    }
+    
+    /* Performance button wrapper */
+    div:has(button[key="nav_Model Performance"]) .stButton {
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        flex-shrink: 0 !important;
+    }
+    
+    /* Ensure Prediction button column has enough width */
+    div:has(button[key="nav_Price Prediction"]) [data-testid="column"] {
+        min-width: max-content !important;
+        width: auto !important;
+        max-width: none !important;
+        flex-shrink: 0 !important;
+        flex-grow: 0 !important;
+        flex-basis: auto !important;
+    }
+    
+    /* Prediction button wrapper */
+    div:has(button[key="nav_Price Prediction"]) .stButton {
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        flex-shrink: 0 !important;
     }
     
     /* Ensure Conclusion button column has enough width */
@@ -787,6 +857,32 @@ st.markdown("""
             width: auto !important;
             flex-shrink: 0 !important;
         }
+        /* Specific styling for Performance button to ensure single line on laptop */
+        button[key="nav_Model Performance"] {
+            font-size: 0.75rem !important;
+            padding: 0.4rem 0.7rem !important;
+            white-space: nowrap !important;
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
+            text-wrap: nowrap !important;
+            min-width: max-content !important;
+            width: auto !important;
+            max-width: none !important;
+        }
+        
+        /* Specific styling for Prediction button to ensure single line on laptop */
+        button[key="nav_Price Prediction"] {
+            font-size: 0.75rem !important;
+            padding: 0.4rem 0.7rem !important;
+            white-space: nowrap !important;
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
+            text-wrap: nowrap !important;
+            min-width: max-content !important;
+            width: auto !important;
+            max-width: none !important;
+        }
+        
         /* Specific styling for Conclusion button to ensure single line on laptop */
         button[key="nav_Conclusion"] {
             font-size: 0.75rem !important;
@@ -798,6 +894,20 @@ st.markdown("""
             min-width: max-content !important;
             width: auto !important;
             max-width: none !important;
+        }
+        
+        /* Ensure Performance button column has enough width on laptop */
+        div:has(button[key="nav_Model Performance"]) [data-testid="column"] {
+            min-width: max-content !important;
+            width: auto !important;
+            flex-shrink: 0 !important;
+        }
+        
+        /* Ensure Prediction button column has enough width on laptop */
+        div:has(button[key="nav_Price Prediction"]) [data-testid="column"] {
+            min-width: max-content !important;
+            width: auto !important;
+            flex-shrink: 0 !important;
         }
         
         /* Ensure Conclusion button column has enough width on laptop */
@@ -815,7 +925,7 @@ nav_pages = ["Home", "Analysis", "Performance", "Prediction", "Conclusion"]
 nav_pages_full = ["Home", "Data Analysis", "Model Performance", "Price Prediction", "Conclusion"]
 
 # Create navbar with logo and buttons in same row - Home button positioned leftmost
-navbar_cols = st.columns([2, 1, 1.3, 1.3, 1.2, 1.3], gap="small")
+navbar_cols = st.columns([2, 1, 1.2, 1.4, 1.4, 1.3], gap="small")
 
 # Logo column
 with navbar_cols[0]:
@@ -888,9 +998,11 @@ st.markdown(f"""
                     column.style.overflow = 'visible';
                 }}
                 
-                // EXTRA AGGRESSIVE handling for Conclusion button
+                // Get the full page name from the button key
                 const buttonKey = btn.getAttribute('key');
-                if (buttonKey === 'nav_Conclusion') {{
+                
+                // EXTRA AGGRESSIVE handling for Performance, Prediction, and Conclusion buttons
+                if (buttonKey === 'nav_Model Performance' || buttonKey === 'nav_Price Prediction' || buttonKey === 'nav_Conclusion') {{
                     btn.style.fontSize = window.innerWidth >= 1024 && window.innerWidth <= 1440 ? '0.75rem' : '0.9rem';
                     btn.style.padding = window.innerWidth >= 1024 && window.innerWidth <= 1440 ? '0.4rem 0.7rem' : '0.5rem 1rem';
                     btn.style.whiteSpace = 'nowrap';
@@ -898,16 +1010,13 @@ st.markdown(f"""
                     btn.style.overflowWrap = 'normal';
                     btn.style.textWrap = 'nowrap';
                     
-                    // Force Conclusion button column to be wider
+                    // Force button column to be wider
                     if (column) {{
                         column.style.minWidth = 'max-content';
                         column.style.width = 'auto';
                         column.style.flexShrink = '0';
                     }}
                 }}
-                
-                // Get the full page name from the button key
-                const buttonKey = btn.getAttribute('key');
                 let pageName = '';
                 if (buttonKey === 'nav_Home') pageName = 'Home';
                 else if (buttonKey === 'nav_Data Analysis') pageName = 'Data Analysis';
