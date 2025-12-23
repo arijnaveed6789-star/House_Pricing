@@ -267,10 +267,9 @@ st.markdown("""
         align-items: stretch !important;
     }
     
-    /* Force all cards in same row to have equal height */
+    /* Force all cards in same row to have equal height - 2 columns */
     .features-section [data-testid="column"]:nth-child(1) .premium-card,
-    .features-section [data-testid="column"]:nth-child(2) .premium-card,
-    .features-section [data-testid="column"]:nth-child(3) .premium-card {
+    .features-section [data-testid="column"]:nth-child(2) .premium-card {
         height: 260px !important;
         min-height: 260px !important;
         max-height: 260px !important;
@@ -293,15 +292,13 @@ st.markdown("""
         max-height: 260px !important;
     }
     
-    /* Ensure all cards have same dimensions regardless of content */
+    /* Ensure all cards have same dimensions regardless of content - 2 columns */
     .features-section .premium-card:first-child,
     .features-section .premium-card:last-child,
     .features-section [data-testid="column"]:nth-child(1) .premium-card:first-child,
     .features-section [data-testid="column"]:nth-child(1) .premium-card:last-child,
     .features-section [data-testid="column"]:nth-child(2) .premium-card:first-child,
-    .features-section [data-testid="column"]:nth-child(2) .premium-card:last-child,
-    .features-section [data-testid="column"]:nth-child(3) .premium-card:first-child,
-    .features-section [data-testid="column"]:nth-child(3) .premium-card:last-child {
+    .features-section [data-testid="column"]:nth-child(2) .premium-card:last-child {
         height: 260px !important;
         min-height: 260px !important;
         max-height: 260px !important;
@@ -346,11 +343,11 @@ st.markdown("""
             overflow: hidden !important;
         }
         
-        /* Ensure all columns have equal width on laptop */
+        /* Ensure all columns have equal width on laptop - 2 columns */
         .features-section [data-testid="column"] {
-            width: 33.333% !important;
-            flex: 0 0 33.333% !important;
-            max-width: 33.333% !important;
+            width: 50% !important;
+            flex: 0 0 50% !important;
+            max-width: 50% !important;
             min-width: 0 !important;
             align-items: stretch !important;
         }
@@ -364,9 +361,7 @@ st.markdown("""
         .features-section [data-testid="column"]:nth-child(1) .premium-card:first-child,
         .features-section [data-testid="column"]:nth-child(1) .premium-card:last-child,
         .features-section [data-testid="column"]:nth-child(2) .premium-card:first-child,
-        .features-section [data-testid="column"]:nth-child(2) .premium-card:last-child,
-        .features-section [data-testid="column"]:nth-child(3) .premium-card:first-child,
-        .features-section [data-testid="column"]:nth-child(3) .premium-card:last-child {
+        .features-section [data-testid="column"]:nth-child(2) .premium-card:last-child {
             height: 300px !important;
             min-height: 300px !important;
             max-height: 300px !important;
@@ -1317,7 +1312,7 @@ if current_page == "Home":
         </div>
     """, unsafe_allow_html=True)
     
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     
     with col1:
         st.markdown("""
@@ -1361,29 +1356,6 @@ if current_page == "Home":
                 </h3>
                 <p style='color: #7f8c8d; line-height: 1.8; margin: 0;'>
                 Analyze 12+ property features including location, size, amenities, and furnishing status.
-                </p>
-            </div>
-        """, unsafe_allow_html=True)
-    
-    with col3:
-        st.markdown("""
-            <div class="premium-card fade-in">
-                <h3 style='color: #1f3b4d; font-size: 1.4rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem;'>
-                AI-Powered
-                </h3>
-                <p style='color: #7f8c8d; line-height: 1.8; margin: 0;'>
-                Leveraging state-of-the-art machine learning algorithms for optimal accuracy.
-                </p>
-            </div>
-        """, unsafe_allow_html=True)
-        
-        st.markdown("""
-            <div class="premium-card fade-in">
-                <h3 style='color: #1f3b4d; font-size: 1.4rem; font-weight: 700; margin-top: 0; margin-bottom: 1rem;'>
-                User-Friendly
-                </h3>
-                <p style='color: #7f8c8d; line-height: 1.8; margin: 0;'>
-                Beautiful, intuitive interface designed for ease of use. Professional and trustworthy.
                 </p>
             </div>
         """, unsafe_allow_html=True)
