@@ -657,7 +657,7 @@ st.markdown("""
         margin-top: 0 !important;
         padding-top: 0.75rem !important;
         padding-bottom: 0.75rem !important;
-        padding-left: 1.5rem !important;
+        padding-left: 0.5rem !important;
         padding-right: 1.5rem !important;
         background: #ffffff !important;
         border-bottom: 1px solid #e0e0e0 !important;
@@ -691,6 +691,54 @@ st.markdown("""
     /* Ensure button text nodes don't wrap */
     button[key^="nav_"] {
         text-overflow: clip !important;
+    }
+    
+    /* Specific styling for Home button to ensure single line - VERY AGGRESSIVE */
+    button[key="nav_Home"] {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
+        text-wrap: nowrap !important;
+        min-width: max-content !important;
+        width: auto !important;
+        max-width: none !important;
+        display: inline-block !important;
+        line-height: 1.2 !important;
+        hyphens: none !important;
+        word-spacing: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+    }
+    
+    button[key="nav_Home"] *,
+    button[key="nav_Home"] span,
+    button[key="nav_Home"] div,
+    button[key="nav_Home"] p {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
+        text-wrap: nowrap !important;
+        display: inline !important;
+        hyphens: none !important;
+        word-spacing: normal !important;
+    }
+    
+    /* Ensure Home button column has enough width */
+    div:has(button[key="nav_Home"]) [data-testid="column"] {
+        min-width: max-content !important;
+        width: auto !important;
+        max-width: none !important;
+        flex-shrink: 0 !important;
+        flex-grow: 0 !important;
+        flex-basis: auto !important;
+    }
+    
+    /* Home button wrapper */
+    div:has(button[key="nav_Home"]) .stButton {
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        flex-shrink: 0 !important;
     }
     
     /* Specific styling for Performance button to ensure single line - VERY AGGRESSIVE */
@@ -848,11 +896,30 @@ st.markdown("""
         }
         div:has(.navbar-logo) ~ div:has([data-testid="column"]) {
             gap: 0.25rem !important;
-            padding-left: 1.25rem !important;
+            padding-left: 0.5rem !important;
             padding-right: 1.25rem !important;
         }
         /* Ensure button columns have enough width */
         div:has(button[key^="nav_"]) [data-testid="column"] {
+            min-width: max-content !important;
+            width: auto !important;
+            flex-shrink: 0 !important;
+        }
+        /* Specific styling for Home button to ensure single line on laptop */
+        button[key="nav_Home"] {
+            font-size: 0.8rem !important;
+            padding: 0.4rem 0.8rem !important;
+            white-space: nowrap !important;
+            word-break: keep-all !important;
+            overflow-wrap: normal !important;
+            text-wrap: nowrap !important;
+            min-width: max-content !important;
+            width: auto !important;
+            max-width: none !important;
+        }
+        
+        /* Ensure Home button column has enough width on laptop */
+        div:has(button[key="nav_Home"]) [data-testid="column"] {
             min-width: max-content !important;
             width: auto !important;
             flex-shrink: 0 !important;
@@ -925,7 +992,7 @@ nav_pages = ["Home", "Analysis", "Performance", "Prediction", "Conclusion"]
 nav_pages_full = ["Home", "Data Analysis", "Model Performance", "Price Prediction", "Conclusion"]
 
 # Create navbar with logo and buttons in same row - Home button positioned leftmost
-navbar_cols = st.columns([2, 1, 1.2, 1.4, 1.4, 1.3], gap="small")
+navbar_cols = st.columns([1.8, 1.1, 1.2, 1.4, 1.4, 1.3], gap="small")
 
 # Logo column
 with navbar_cols[0]:
@@ -1001,8 +1068,22 @@ st.markdown(f"""
                 // Get the full page name from the button key
                 const buttonKey = btn.getAttribute('key');
                 
-                // EXTRA AGGRESSIVE handling for Performance, Prediction, and Conclusion buttons
-                if (buttonKey === 'nav_Model Performance' || buttonKey === 'nav_Price Prediction' || buttonKey === 'nav_Conclusion') {{
+                // EXTRA AGGRESSIVE handling for Home button
+                if (buttonKey === 'nav_Home') {{
+                    btn.style.fontSize = window.innerWidth >= 1024 && window.innerWidth <= 1440 ? '0.8rem' : '0.9rem';
+                    btn.style.padding = window.innerWidth >= 1024 && window.innerWidth <= 1440 ? '0.4rem 0.8rem' : '0.5rem 1rem';
+                    btn.style.whiteSpace = 'nowrap';
+                    btn.style.wordBreak = 'keep-all';
+                    btn.style.overflowWrap = 'normal';
+                    btn.style.textWrap = 'nowrap';
+                    
+                    // Force Home button column to be wider
+                    if (column) {{
+                        column.style.minWidth = 'max-content';
+                        column.style.width = 'auto';
+                        column.style.flexShrink = '0';
+                    }}
+                }} else if (buttonKey === 'nav_Model Performance' || buttonKey === 'nav_Price Prediction' || buttonKey === 'nav_Conclusion') {{
                     btn.style.fontSize = window.innerWidth >= 1024 && window.innerWidth <= 1440 ? '0.75rem' : '0.9rem';
                     btn.style.padding = window.innerWidth >= 1024 && window.innerWidth <= 1440 ? '0.4rem 0.7rem' : '0.5rem 1rem';
                     btn.style.whiteSpace = 'nowrap';
