@@ -244,6 +244,45 @@ st.markdown("""
         border-color: rgba(26, 188, 156, 0.3);
     }
     
+    /* Key Features Section - Equal card dimensions */
+    .features-section .premium-card {
+        height: 280px !important;
+        min-height: 280px !important;
+        max-height: 280px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Ensure columns in features section have equal width */
+    .features-section [data-testid="column"] {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    /* Make sure card containers fill their column */
+    .features-section [data-testid="column"] > div {
+        width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+    }
+    
+    /* Card content layout */
+    .features-section .premium-card h3 {
+        flex-shrink: 0 !important;
+        margin-top: 0 !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    .features-section .premium-card p {
+        flex-grow: 1 !important;
+        margin: 0 !important;
+        display: flex !important;
+        align-items: flex-start !important;
+    }
+    
     /* Metric Cards */
     .metric-card {
         background: #ffffff;
@@ -775,8 +814,8 @@ st.markdown("""
 nav_pages = ["Home", "Analysis", "Performance", "Prediction", "Conclusion"]
 nav_pages_full = ["Home", "Data Analysis", "Model Performance", "Price Prediction", "Conclusion"]
 
-# Create navbar with logo and buttons in same row - wider columns for longer button names
-navbar_cols = st.columns([2, 1.2, 1.3, 1.3, 1.2, 1.3], gap="small")
+# Create navbar with logo and buttons in same row - Home button positioned leftmost
+navbar_cols = st.columns([2, 1, 1.3, 1.3, 1.2, 1.3], gap="small")
 
 # Logo column
 with navbar_cols[0]:
@@ -787,9 +826,15 @@ with navbar_cols[0]:
         </div>
     """, unsafe_allow_html=True)
 
-# Navigation buttons in remaining columns
-for idx, (short_name, full_name) in enumerate(zip(nav_pages, nav_pages_full)):
-    with navbar_cols[idx + 1]:
+# Home button - first button, positioned leftmost
+with navbar_cols[1]:
+    if st.button("Home", key="nav_Home", use_container_width=False):
+        st.session_state.page = "Home"
+        st.rerun()
+
+# Remaining navigation buttons
+for idx, (short_name, full_name) in enumerate(zip(nav_pages[1:], nav_pages_full[1:]), start=2):
+    with navbar_cols[idx]:
         if st.button(short_name, key=f"nav_{full_name}", use_container_width=False):
             st.session_state.page = full_name
             st.rerun()
