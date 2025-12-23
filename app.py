@@ -244,7 +244,7 @@ st.markdown("""
         border-color: rgba(26, 188, 156, 0.3);
     }
     
-    /* Key Features Section - Equal card dimensions */
+    /* Key Features Section - Equal card dimensions - FORCE EXACT HEIGHT */
     .features-section .premium-card {
         height: 260px !important;
         min-height: 260px !important;
@@ -255,46 +255,87 @@ st.markdown("""
         box-sizing: border-box !important;
         padding: 2rem !important;
         margin-bottom: 2rem !important;
+        overflow: hidden !important;
     }
     
-    /* Ensure columns in features section have equal width */
+    /* Ensure columns in features section have equal width and height */
     .features-section [data-testid="column"] {
         width: 100% !important;
         display: flex !important;
         flex-direction: column !important;
         flex: 1 1 0 !important;
+        align-items: stretch !important;
     }
     
-    /* Make sure card containers fill their column */
+    /* Force all cards in same row to have equal height */
+    .features-section [data-testid="column"]:nth-child(1) .premium-card,
+    .features-section [data-testid="column"]:nth-child(2) .premium-card,
+    .features-section [data-testid="column"]:nth-child(3) .premium-card {
+        height: 260px !important;
+        min-height: 260px !important;
+        max-height: 260px !important;
+    }
+    
+    /* Make sure card containers fill their column and maintain height */
     .features-section [data-testid="column"] > div {
         width: 100% !important;
         display: flex !important;
         flex-direction: column !important;
+        height: 100% !important;
     }
     
-    /* Card content layout - override inline styles */
-    .features-section .premium-card h3 {
+    /* Force all premium-card divs to have exact height - override any inline styles */
+    .features-section [data-testid="column"] .premium-card,
+    .features-section [data-testid="column"] > div > div .premium-card,
+    .features-section .premium-card[class*="premium-card"] {
+        height: 260px !important;
+        min-height: 260px !important;
+        max-height: 260px !important;
+    }
+    
+    /* Ensure all cards have same dimensions regardless of content */
+    .features-section .premium-card:first-child,
+    .features-section .premium-card:last-child,
+    .features-section [data-testid="column"]:nth-child(1) .premium-card:first-child,
+    .features-section [data-testid="column"]:nth-child(1) .premium-card:last-child,
+    .features-section [data-testid="column"]:nth-child(2) .premium-card:first-child,
+    .features-section [data-testid="column"]:nth-child(2) .premium-card:last-child,
+    .features-section [data-testid="column"]:nth-child(3) .premium-card:first-child,
+    .features-section [data-testid="column"]:nth-child(3) .premium-card:last-child {
+        height: 260px !important;
+        min-height: 260px !important;
+        max-height: 260px !important;
+    }
+    
+    /* Card content layout - override inline styles with maximum specificity */
+    .features-section .premium-card h3,
+    .features-section [data-testid="column"] .premium-card h3 {
         flex-shrink: 0 !important;
         margin-top: 0 !important;
         margin-bottom: 0.8rem !important;
         font-size: 1.1rem !important;
         font-weight: 700 !important;
         color: #1f3b4d !important;
+        line-height: 1.3 !important;
     }
     
-    .features-section .premium-card p {
+    .features-section .premium-card p,
+    .features-section [data-testid="column"] .premium-card p {
         flex-grow: 1 !important;
+        flex-shrink: 1 !important;
         margin: 0 !important;
         display: flex !important;
         align-items: flex-start !important;
         line-height: 1.6 !important;
         font-size: 0.9rem !important;
         color: #7f8c8d !important;
+        min-height: 0 !important;
     }
     
     /* Laptop screen optimization for Key Features cards (1024px - 1440px) */
     @media (min-width: 1024px) and (max-width: 1440px) {
-        .features-section .premium-card {
+        .features-section .premium-card,
+        .features-section [data-testid="column"] .premium-card {
             height: 300px !important;
             min-height: 300px !important;
             max-height: 300px !important;
@@ -302,6 +343,7 @@ st.markdown("""
             padding: 1.8rem !important;
             box-sizing: border-box !important;
             margin-bottom: 1.5rem !important;
+            overflow: hidden !important;
         }
         
         /* Ensure all columns have equal width on laptop */
@@ -310,6 +352,24 @@ st.markdown("""
             flex: 0 0 33.333% !important;
             max-width: 33.333% !important;
             min-width: 0 !important;
+            align-items: stretch !important;
+        }
+        
+        /* Force ALL cards to have equal height on laptop - comprehensive override */
+        .features-section [data-testid="column"] .premium-card,
+        .features-section [data-testid="column"] > div > div .premium-card,
+        .features-section .premium-card[class*="premium-card"],
+        .features-section .premium-card:first-child,
+        .features-section .premium-card:last-child,
+        .features-section [data-testid="column"]:nth-child(1) .premium-card:first-child,
+        .features-section [data-testid="column"]:nth-child(1) .premium-card:last-child,
+        .features-section [data-testid="column"]:nth-child(2) .premium-card:first-child,
+        .features-section [data-testid="column"]:nth-child(2) .premium-card:last-child,
+        .features-section [data-testid="column"]:nth-child(3) .premium-card:first-child,
+        .features-section [data-testid="column"]:nth-child(3) .premium-card:last-child {
+            height: 300px !important;
+            min-height: 300px !important;
+            max-height: 300px !important;
         }
         
         /* Ensure cards maintain equal dimensions and spacing */
@@ -317,19 +377,30 @@ st.markdown("""
             width: 100% !important;
             display: flex !important;
             flex-direction: column !important;
+            height: 100% !important;
         }
         
-        /* Reduced card heading size on laptop */
-        .features-section .premium-card h3 {
+        /* Reduced card heading size on laptop - override inline styles */
+        .features-section .premium-card h3,
+        .features-section [data-testid="column"] .premium-card h3 {
             font-size: 1rem !important;
             margin-bottom: 0.75rem !important;
+            margin-top: 0 !important;
             font-weight: 700 !important;
+            color: #1f3b4d !important;
+            line-height: 1.3 !important;
         }
         
-        /* Reduced card text on laptop */
-        .features-section .premium-card p {
+        /* Reduced card text on laptop - override inline styles */
+        .features-section .premium-card p,
+        .features-section [data-testid="column"] .premium-card p {
             font-size: 0.85rem !important;
             line-height: 1.5 !important;
+            margin: 0 !important;
+            flex-grow: 1 !important;
+            flex-shrink: 1 !important;
+            color: #7f8c8d !important;
+            min-height: 0 !important;
         }
     }
     
