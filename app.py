@@ -591,8 +591,8 @@ st.markdown("""
         background: transparent !important;
         color: rgba(255, 255, 255, 0.85) !important;
         font-weight: 500 !important;
-        font-size: 0.95rem !important;
-        padding: 0.5rem 1.2rem !important;
+        font-size: 0.75rem !important;
+        padding: 0.35rem 0.9rem !important;
         border-radius: 6px !important;
         border: none !important;
         box-shadow: none !important;
@@ -608,6 +608,26 @@ st.markdown("""
         overflow: visible !important;
         word-break: keep-all !important;
         overflow-wrap: normal !important;
+        line-height: 1.2 !important;
+        display: inline-block !important;
+        text-align: center !important;
+    }
+    
+    /* AGGRESSIVE: Force all button text to single line */
+    button[key^="nav_"],
+    button[key^="nav_"] *,
+    button[key^="nav_"] span,
+    button[key^="nav_"] div,
+    button[key^="nav_"] p,
+    button[key^="nav_"]::before,
+    button[key^="nav_"]::after {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
+        word-spacing: normal !important;
+        text-wrap: nowrap !important;
+        display: inline !important;
+        line-height: 1.2 !important;
     }
     
     button[key^="nav_"]:hover {
@@ -644,36 +664,57 @@ st.markdown("""
         word-break: keep-all !important;
         overflow-wrap: normal !important;
         display: inline-block !important;
+        text-wrap: nowrap !important;
+        hyphens: none !important;
     }
     
-    /* Force single line for all button text */
-    button[key^="nav_"] * {
+    /* Force single line for all button text - AGGRESSIVE */
+    button[key^="nav_"] *,
+    button[key^="nav_"] span,
+    button[key^="nav_"] div,
+    button[key^="nav_"] p,
+    button[key^="nav_"] strong,
+    button[key^="nav_"] em {
         white-space: nowrap !important;
         word-break: keep-all !important;
         overflow-wrap: normal !important;
+        text-wrap: nowrap !important;
+        display: inline !important;
+        word-spacing: normal !important;
+        hyphens: none !important;
     }
     
     /* Laptop Screen Spacing (1024px - 1440px) - PRIMARY STYLING */
     @media (min-width: 1024px) and (max-width: 1440px) {
         .navbar-wrapper {
-            padding: 0 2rem 0.7rem 2rem;
-            gap: 2.5rem;
+            padding: 0 1.5rem 0.7rem 1.5rem;
+            gap: 1.5rem;
         }
         .navbar-logo {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
         }
         .navbar-logo-icon {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
         }
         .navbar-logo-text {
-            letter-spacing: 0.8px;
+            letter-spacing: 0.6px;
         }
         .nav-buttons-wrapper {
-            gap: 2rem;
+            gap: 1rem;
         }
         button[key^="nav_"] {
-            font-size: 0.9rem !important;
-            padding: 0.5rem 1.1rem !important;
+            font-size: 0.65rem !important;
+            padding: 0.3rem 0.65rem !important;
+            white-space: nowrap !important;
+            word-break: keep-all !important;
+        }
+        /* Smaller font for longer button names on laptop */
+        button[key="nav_Model Performance"],
+        button[key="nav_Price Prediction"],
+        button[key="nav_Data Analysis"],
+        button[key="nav_Conclusion"] {
+            font-size: 0.6rem !important;
+            padding: 0.3rem 0.6rem !important;
         }
     }
     
@@ -696,8 +737,8 @@ st.markdown("""
             gap: 2.5rem;
         }
     button[key^="nav_"] {
-            font-size: 1rem !important;
-            padding: 0.6rem 1.3rem !important;
+            font-size: 0.8rem !important;
+            padding: 0.4rem 1rem !important;
         }
     }
     
@@ -720,8 +761,8 @@ st.markdown("""
             gap: 1.5rem;
     }
     button[key^="nav_"] {
-        font-size: 0.85rem !important;
-            padding: 0.45rem 1rem !important;
+        font-size: 0.7rem !important;
+            padding: 0.35rem 0.85rem !important;
         }
     }
     
@@ -747,8 +788,8 @@ st.markdown("""
             justify-content: center;
         }
         button[key^="nav_"] {
-            font-size: 0.75rem !important;
-            padding: 0.4rem 0.85rem !important;
+            font-size: 0.65rem !important;
+            padding: 0.3rem 0.7rem !important;
         }
     }
     
@@ -763,6 +804,14 @@ st.markdown("""
         display: flex !important;
         align-items: center !important;
         gap: 2rem !important;
+    }
+    
+    /* Laptop screen - reduce gap between navbar columns */
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        div:has(.navbar-logo) ~ div:has([data-testid="column"]) {
+            gap: 1rem !important;
+            padding: 0 1.5rem 0.7rem 1.5rem !important;
+        }
     }
     
     /* Force navbar to top of page - Remove all top spacing */
@@ -884,17 +933,36 @@ st.markdown("""
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
+        text-wrap: nowrap !important;
+        hyphens: none !important;
+        word-spacing: normal !important;
+        line-height: 1.2 !important;
     }
     
-    /* Force all button content to single line */
+    /* Force all button content to single line - VERY AGGRESSIVE */
     button[key^="nav_"] *,
     button[key^="nav_"] span,
     button[key^="nav_"] div,
-    button[key^="nav_"] p {
+    button[key^="nav_"] p,
+    button[key^="nav_"] strong,
+    button[key^="nav_"] em,
+    button[key^="nav_"] b,
+    button[key^="nav_"] i {
         white-space: nowrap !important;
         word-break: keep-all !important;
         overflow-wrap: normal !important;
         display: inline !important;
+        text-wrap: nowrap !important;
+        hyphens: none !important;
+        word-spacing: normal !important;
+        line-height: 1.2 !important;
+    }
+    
+    /* Prevent any text node from wrapping */
+    button[key^="nav_"]::before,
+    button[key^="nav_"]::after {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
     }
     
     /* Button wrapper - prevent width constraints */
@@ -905,26 +973,45 @@ st.markdown("""
         flex-shrink: 0 !important;
     }
     
-    /* Column constraints - allow content-based width */
-    div:has(button[key^="nav_"]) [data-testid="column"] {
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-        flex-basis: auto !important;
-        flex-grow: 0 !important;
-            flex-shrink: 0 !important;
-        }
-    
-    /* CRITICAL: Remove all width constraints from button columns */
+    /* Column constraints - allow content-based width - AGGRESSIVE */
     div:has(button[key^="nav_"]) [data-testid="column"],
-    div:has(button[key^="nav_"]) [data-testid="column"] > div {
+    div:has(button[key^="nav_"]) [data-testid="column"] > div,
+    div:has(button[key^="nav_"]) [data-testid="column"] > div > div {
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
         flex-basis: auto !important;
         flex-grow: 0 !important;
-            flex-shrink: 0 !important;
-        }
+        flex-shrink: 0 !important;
+        overflow: visible !important;
+    }
+    
+    /* Remove all width constraints from button columns */
+    div:has(button[key^="nav_"]) [data-testid="column"][style*="width"] {
+        width: auto !important;
+        min-width: max-content !important;
+    }
+    
+    /* Additional column width removal - ensure no constraints */
+    div:has(button[key^="nav_"]) [data-testid="column"] [style*="width"] {
+        width: auto !important;
+        min-width: max-content !important;
+    }
+    
+    /* FINAL: Force all button text to single line - NO EXCEPTIONS */
+    button[key^="nav_"],
+    button[key^="nav_"] *,
+    button[key^="nav_"]::before,
+    button[key^="nav_"]::after {
+        white-space: nowrap !important;
+        word-break: keep-all !important;
+        overflow-wrap: normal !important;
+        text-wrap: nowrap !important;
+        hyphens: none !important;
+        word-spacing: normal !important;
+        display: inline !important;
+        line-height: 1.2 !important;
+    }
     
     /* Force Model Performance button to stay on one line */
     button[key="nav_Model Performance"],
@@ -953,24 +1040,38 @@ st.markdown("""
     /* Laptop-specific spacing adjustments */
     @media (min-width: 1024px) and (max-width: 1440px) {
         div:has(.navbar-logo) ~ div:has([data-testid="column"]) {
-            gap: 2rem !important;
+            gap: 1rem !important;
         }
         div:has(button[key^="nav_"]) [data-testid="column"] {
             margin-right: 0 !important;
-            padding: 0 0.5rem !important;
+            padding: 0 0.3rem !important;
         }
         
         /* Ensure Model Performance button has enough space on laptop */
         button[key="nav_Model Performance"] {
-            font-size: 0.9rem !important;
-            padding: 0.5rem 1.1rem !important;
+            font-size: 0.6rem !important;
+            padding: 0.3rem 0.6rem !important;
             white-space: nowrap !important;
         }
         
         /* Ensure Price Prediction button has enough space on laptop */
         button[key="nav_Price Prediction"] {
-            font-size: 0.9rem !important;
-            padding: 0.5rem 1.1rem !important;
+            font-size: 0.6rem !important;
+            padding: 0.3rem 0.6rem !important;
+            white-space: nowrap !important;
+        }
+        
+        /* Ensure Data Analysis button fits on laptop */
+        button[key="nav_Data Analysis"] {
+            font-size: 0.6rem !important;
+            padding: 0.3rem 0.6rem !important;
+            white-space: nowrap !important;
+        }
+        
+        /* Ensure Conclusion button fits on laptop */
+        button[key="nav_Conclusion"] {
+            font-size: 0.6rem !important;
+            padding: 0.3rem 0.6rem !important;
             white-space: nowrap !important;
         }
     }
@@ -989,7 +1090,7 @@ st.markdown(f"""
                 const buttonText = btn.textContent.trim();
                 btn.classList.remove('nav-active');
                 
-                // Force single line - AGGRESSIVE
+                // Force single line - VERY AGGRESSIVE
                 btn.style.whiteSpace = 'nowrap';
                 btn.style.wordBreak = 'keep-all';
                 btn.style.overflowWrap = 'normal';
@@ -998,32 +1099,58 @@ st.markdown(f"""
                 btn.style.maxWidth = 'none';
                 btn.style.display = 'inline-block';
                 btn.style.lineHeight = '1.2';
+                btn.style.textWrap = 'nowrap';
+                btn.style.hyphens = 'none';
+                btn.style.wordSpacing = 'normal';
                 
-                // Force all child elements to single line
+                // Force all child elements to single line - AGGRESSIVE
                 const children = btn.querySelectorAll('*');
                 children.forEach(child => {{
                     child.style.whiteSpace = 'nowrap';
                     child.style.wordBreak = 'keep-all';
                     child.style.overflowWrap = 'normal';
                     child.style.display = 'inline';
+                    child.style.textWrap = 'nowrap';
+                    child.style.hyphens = 'none';
+                    child.style.wordSpacing = 'normal';
+                    child.style.lineHeight = '1.2';
                 }});
                 
-                // Special handling for Model Performance and Price Prediction
-                if (buttonText === 'Model Performance' || buttonText === 'Price Prediction') {{
-                    btn.style.fontSize = '0.9rem';
-                    btn.style.padding = '0.5rem 1.1rem';
-                    btn.style.width = 'auto';
-                    btn.style.minWidth = 'max-content';
-                    
-                    // Force parent column to not constrain
+                // Remove any width constraints from parent columns
                 const column = btn.closest('[data-testid="column"]');
                 if (column) {{
-                        column.style.width = 'auto';
-                        column.style.minWidth = 'max-content';
-                        column.style.maxWidth = 'none';
-                        column.style.flexBasis = 'auto';
-                        column.style.flexGrow = '0';
-                        column.style.flexShrink = '0';
+                    column.style.width = 'auto';
+                    column.style.minWidth = 'max-content';
+                    column.style.maxWidth = 'none';
+                    column.style.flexBasis = 'auto';
+                    column.style.flexGrow = '0';
+                    column.style.flexShrink = '0';
+                    column.style.overflow = 'visible';
+                    
+                    // Remove width from all parent divs
+                    let parent = column.parentElement;
+                    let depth = 0;
+                    while (parent && depth < 5) {{
+                        if (parent.style) {{
+                            parent.style.width = 'auto';
+                            parent.style.minWidth = 'max-content';
+                            parent.style.maxWidth = 'none';
+                        }}
+                        parent = parent.parentElement;
+                        depth++;
+                    }}
+                }}
+                
+                // Special handling for longer button names on laptop screens
+                const isLaptop = window.innerWidth >= 1024 && window.innerWidth <= 1440;
+                if (isLaptop) {{
+                    if (buttonText === 'Model Performance' || buttonText === 'Price Prediction' || 
+                        buttonText === 'Data Analysis' || buttonText === 'Conclusion') {{
+                        btn.style.fontSize = '0.6rem';
+                        btn.style.padding = '0.3rem 0.6rem';
+                    }} else {{
+                        btn.style.fontSize = '0.65rem';
+                        btn.style.padding = '0.3rem 0.65rem';
                     }}
                 }}
                 
