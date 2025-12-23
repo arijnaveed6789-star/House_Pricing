@@ -246,13 +246,15 @@ st.markdown("""
     
     /* Key Features Section - Equal card dimensions */
     .features-section .premium-card {
-        height: 280px !important;
-        min-height: 280px !important;
-        max-height: 280px !important;
+        height: 260px !important;
+        min-height: 260px !important;
+        max-height: 260px !important;
         display: flex !important;
         flex-direction: column !important;
         width: 100% !important;
         box-sizing: border-box !important;
+        padding: 2rem !important;
+        margin-bottom: 2rem !important;
     }
     
     /* Ensure columns in features section have equal width */
@@ -260,6 +262,7 @@ st.markdown("""
         width: 100% !important;
         display: flex !important;
         flex-direction: column !important;
+        flex: 1 1 0 !important;
     }
     
     /* Make sure card containers fill their column */
@@ -269,11 +272,14 @@ st.markdown("""
         flex-direction: column !important;
     }
     
-    /* Card content layout */
+    /* Card content layout - override inline styles */
     .features-section .premium-card h3 {
         flex-shrink: 0 !important;
         margin-top: 0 !important;
-        margin-bottom: 1rem !important;
+        margin-bottom: 0.8rem !important;
+        font-size: 1.1rem !important;
+        font-weight: 700 !important;
+        color: #1f3b4d !important;
     }
     
     .features-section .premium-card p {
@@ -281,6 +287,50 @@ st.markdown("""
         margin: 0 !important;
         display: flex !important;
         align-items: flex-start !important;
+        line-height: 1.6 !important;
+        font-size: 0.9rem !important;
+        color: #7f8c8d !important;
+    }
+    
+    /* Laptop screen optimization for Key Features cards (1024px - 1440px) */
+    @media (min-width: 1024px) and (max-width: 1440px) {
+        .features-section .premium-card {
+            height: 300px !important;
+            min-height: 300px !important;
+            max-height: 300px !important;
+            width: 100% !important;
+            padding: 1.8rem !important;
+            box-sizing: border-box !important;
+            margin-bottom: 1.5rem !important;
+        }
+        
+        /* Ensure all columns have equal width on laptop */
+        .features-section [data-testid="column"] {
+            width: 33.333% !important;
+            flex: 0 0 33.333% !important;
+            max-width: 33.333% !important;
+            min-width: 0 !important;
+        }
+        
+        /* Ensure cards maintain equal dimensions and spacing */
+        .features-section [data-testid="column"] > div {
+            width: 100% !important;
+            display: flex !important;
+            flex-direction: column !important;
+        }
+        
+        /* Reduced card heading size on laptop */
+        .features-section .premium-card h3 {
+            font-size: 1rem !important;
+            margin-bottom: 0.75rem !important;
+            font-weight: 700 !important;
+        }
+        
+        /* Reduced card text on laptop */
+        .features-section .premium-card p {
+            font-size: 0.85rem !important;
+            line-height: 1.5 !important;
+        }
     }
     
     /* Metric Cards */
